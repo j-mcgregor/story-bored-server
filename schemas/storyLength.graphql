@@ -1,0 +1,29 @@
+scalar DateTime
+
+enum StoryLengthType {
+    FLASH
+    SHORT
+    NOVELLA
+    NOVEL
+    EPIC
+}
+
+type StoryLength {
+    id: ID!
+    minWords: Int
+    maxWords: Int
+    avChapters: Int
+    name: StoryLengthType
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input StoryLengthInput {
+    id: ID
+    minWords: Int
+    maxWords: Int
+    avChapters: Int
+    name: StoryLengthType
+}

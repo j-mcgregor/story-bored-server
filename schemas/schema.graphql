@@ -1,25 +1,34 @@
 # import User from "user.graphql"
 # import Notification from "notification.graphql"
+# import StoryLength from "storyLength.graphql"
 # import Post from "post.graphql"
 
 type Query {
-  users: [User!]!
-  user(id: ID!): User
-  posts: [Post!]!
-  notifications: [Notification!]!
+    users: [User!]!
+    user(id: ID!): User
+    posts: [Post!]!
+    notifications: [Notification!]!
+    # STORY
+    # -- length
+    storyLength: [StoryLength]!
 }
 
 type Mutation {
-  signInEmail(email: String! password: String!): AuthPayload!
-  signInGoogle(socialUser: SocialUserInput!): AuthPayload!
-  signInFacebook(socialUser: SocialUserInput!): AuthPayload!
-  signInApple(socialUser: SocialUserInput!): AuthPayload!
-  signUp(user: UserInput!): AuthPayload!
-  addNotificationToken(notification: NotificationInput!): Notification
-  updateProfile(user: UserInput!): User
+    signInEmail(email: String!, password: String!): AuthPayload!
+    signInGoogle(socialUser: SocialUserInput!): AuthPayload!
+    signInFacebook(socialUser: SocialUserInput!): AuthPayload!
+    signInApple(socialUser: SocialUserInput!): AuthPayload!
+    signUp(user: UserInput!): AuthPayload!
+    addNotificationToken(notification: NotificationInput!): Notification
+    updateProfile(user: UserInput!): User
+    # STORY
+    # -- length
+    addStoryLength(storyLength: StoryLengthInput!): [StoryLength]
+    updateStoryLength(storyLength: StoryLengthInput!): StoryLength
+    deleteStoryLength(storyLengthId: String!): String
 }
 
 type Subscription {
-  userSignedIn: User
-  userUpdated: User
+    userSignedIn: User
+    userUpdated: User
 }
