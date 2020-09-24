@@ -1,3 +1,7 @@
+import { CharacterListType } from './src/models/story/CharacterType';
+import { CharacterRoleType } from './src/models/story/CharacterLype';
+import { GenreListType } from './src/models/story/GenreListType';
+import { StoryStageType } from './src/models/data/Stage';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { MyContext } from '../context';
 export type Maybe<T> = T | null;
@@ -26,12 +30,54 @@ export enum AuthType {
   Apple = 'APPLE'
 }
 
+export { CharacterListType };
+
+export { CharacterRoleType };
+
+export type CharacterType = {
+  __typename?: 'CharacterType';
+  id: Scalars['ID'];
+  name?: Maybe<CharacterListType>;
+  category?: Maybe<CharacterRoleType>;
+  description?: Maybe<Scalars['String']>;
+  examples: Array<Maybe<Scalars['String']>>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type CharacterTypeInput = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<CharacterListType>;
+  category?: Maybe<CharacterRoleType>;
+  description?: Maybe<Scalars['String']>;
+  examples: Array<Maybe<Scalars['String']>>;
+};
+
 
 
 export enum Gender {
   Male = 'MALE',
   Female = 'FEMALE'
 }
+
+export { GenreListType };
+
+export type GenreType = {
+  __typename?: 'GenreType';
+  id: Scalars['ID'];
+  name?: Maybe<GenreListType>;
+  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type GenreTypeInput = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<GenreListType>;
+  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -45,6 +91,24 @@ export type Mutation = {
   addStoryLength?: Maybe<Array<Maybe<StoryLength>>>;
   updateStoryLength?: Maybe<StoryLength>;
   deleteStoryLength?: Maybe<Scalars['String']>;
+  addCharacterType?: Maybe<Array<Maybe<CharacterType>>>;
+  updateCharacterType?: Maybe<CharacterType>;
+  deleteCharacterType?: Maybe<Scalars['String']>;
+  addGenreType?: Maybe<Array<Maybe<GenreType>>>;
+  updateGenreType?: Maybe<GenreType>;
+  deleteGenreType?: Maybe<Scalars['String']>;
+  addWritingPrompt?: Maybe<Array<Maybe<WritingPrompt>>>;
+  updateWritingPrompt?: Maybe<WritingPrompt>;
+  deleteWritingPrompt?: Maybe<Scalars['String']>;
+  bulkAddWritingPrompt?: Maybe<Array<Maybe<WritingPrompt>>>;
+  addPlotDevice?: Maybe<Array<Maybe<PlotDevice>>>;
+  updatePlotDevice?: Maybe<PlotDevice>;
+  deletePlotDevice?: Maybe<Scalars['String']>;
+  bulkAddPlotDevice?: Maybe<Array<Maybe<PlotDevice>>>;
+  addStoryStage?: Maybe<Array<Maybe<StoryStage>>>;
+  updateStoryStage?: Maybe<StoryStage>;
+  deleteStoryStage?: Maybe<Scalars['String']>;
+  bulkAddStoryStage?: Maybe<Array<Maybe<StoryStage>>>;
 };
 
 
@@ -98,6 +162,96 @@ export type MutationDeleteStoryLengthArgs = {
   storyLengthId: Scalars['String'];
 };
 
+
+export type MutationAddCharacterTypeArgs = {
+  characterType: CharacterTypeInput;
+};
+
+
+export type MutationUpdateCharacterTypeArgs = {
+  characterType: CharacterTypeInput;
+};
+
+
+export type MutationDeleteCharacterTypeArgs = {
+  characterTypeId: Scalars['String'];
+};
+
+
+export type MutationAddGenreTypeArgs = {
+  genreType: GenreTypeInput;
+};
+
+
+export type MutationUpdateGenreTypeArgs = {
+  genreType: GenreTypeInput;
+};
+
+
+export type MutationDeleteGenreTypeArgs = {
+  genreTypeId: Scalars['String'];
+};
+
+
+export type MutationAddWritingPromptArgs = {
+  writingPrompt: WritingPromptInput;
+};
+
+
+export type MutationUpdateWritingPromptArgs = {
+  writingPrompt: WritingPromptInput;
+};
+
+
+export type MutationDeleteWritingPromptArgs = {
+  writingPromptId: Scalars['String'];
+};
+
+
+export type MutationBulkAddWritingPromptArgs = {
+  writingPrompts: Array<Maybe<WritingPromptInput>>;
+};
+
+
+export type MutationAddPlotDeviceArgs = {
+  plotDevice: PlotDeviceInput;
+};
+
+
+export type MutationUpdatePlotDeviceArgs = {
+  plotDevice: PlotDeviceInput;
+};
+
+
+export type MutationDeletePlotDeviceArgs = {
+  plotDeviceId: Scalars['String'];
+};
+
+
+export type MutationBulkAddPlotDeviceArgs = {
+  plotDevices: Array<Maybe<PlotDeviceInput>>;
+};
+
+
+export type MutationAddStoryStageArgs = {
+  storyStage: StoryStageInput;
+};
+
+
+export type MutationUpdateStoryStageArgs = {
+  storyStage: StoryStageInput;
+};
+
+
+export type MutationDeleteStoryStageArgs = {
+  storyStageId: Scalars['String'];
+};
+
+
+export type MutationBulkAddStoryStageArgs = {
+  storyStages: Array<Maybe<StoryStageInput>>;
+};
+
 export type Notification = {
   __typename?: 'Notification';
   id: Scalars['ID'];
@@ -112,6 +266,24 @@ export type NotificationInput = {
   token: Scalars['String'];
   device?: Maybe<Scalars['String']>;
   os?: Maybe<Scalars['String']>;
+};
+
+export type PlotDevice = {
+  __typename?: 'PlotDevice';
+  id?: Maybe<Scalars['String']>;
+  plot?: Maybe<Scalars['String']>;
+  definition?: Maybe<Scalars['String']>;
+  example?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlotDeviceInput = {
+  id?: Maybe<Scalars['String']>;
+  plot?: Maybe<Scalars['String']>;
+  definition?: Maybe<Scalars['String']>;
+  example?: Maybe<Scalars['String']>;
 };
 
 export type Post = {
@@ -130,6 +302,11 @@ export type Query = {
   posts: Array<Post>;
   notifications: Array<Notification>;
   storyLength: Array<Maybe<StoryLength>>;
+  characterType: Array<Maybe<CharacterType>>;
+  genreType: Array<Maybe<GenreType>>;
+  writingPrompt: Array<Maybe<WritingPrompt>>;
+  plotDevices: Array<Maybe<PlotDevice>>;
+  storyStages: Array<Maybe<StoryStage>>;
 };
 
 
@@ -178,6 +355,28 @@ export enum StoryLengthType {
   Epic = 'EPIC'
 }
 
+export type StoryStage = {
+  __typename?: 'StoryStage';
+  id?: Maybe<Scalars['String']>;
+  stage?: Maybe<StoryStageType>;
+  summary?: Maybe<Scalars['String']>;
+  storyOrder?: Maybe<Scalars['Int']>;
+  plottingOrder?: Maybe<Scalars['Int']>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type StoryStageInput = {
+  id?: Maybe<Scalars['String']>;
+  stage?: Maybe<StoryStageType>;
+  summary?: Maybe<Scalars['String']>;
+  storyOrder?: Maybe<Scalars['Int']>;
+  plottingOrder?: Maybe<Scalars['Int']>;
+};
+
+export { StoryStageType };
+
 export type Subscription = {
   __typename?: 'Subscription';
   userSignedIn?: Maybe<User>;
@@ -214,6 +413,22 @@ export type UserInput = {
   gender?: Maybe<Gender>;
   phone?: Maybe<Scalars['String']>;
   statusMessage?: Maybe<Scalars['String']>;
+};
+
+export type WritingPrompt = {
+  __typename?: 'WritingPrompt';
+  id?: Maybe<Scalars['String']>;
+  prompt?: Maybe<Scalars['String']>;
+  genres?: Maybe<Array<Maybe<GenreListType>>>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type WritingPromptInput = {
+  id?: Maybe<Scalars['String']>;
+  prompt?: Maybe<Scalars['String']>;
+  genres?: Maybe<Array<Maybe<GenreListType>>>;
 };
 
 
@@ -308,12 +523,26 @@ export type ResolversTypes = {
   StoryLength: ResolverTypeWrapper<StoryLength>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   StoryLengthType: StoryLengthType;
+  CharacterType: ResolverTypeWrapper<CharacterType>;
+  CharacterListType: CharacterListType;
+  CharacterRoleType: CharacterRoleType;
+  GenreType: ResolverTypeWrapper<GenreType>;
+  GenreListType: GenreListType;
+  WritingPrompt: ResolverTypeWrapper<WritingPrompt>;
+  PlotDevice: ResolverTypeWrapper<PlotDevice>;
+  StoryStage: ResolverTypeWrapper<StoryStage>;
+  StoryStageType: StoryStageType;
   Mutation: ResolverTypeWrapper<{}>;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   SocialUserInput: SocialUserInput;
   UserInput: UserInput;
   NotificationInput: NotificationInput;
   StoryLengthInput: StoryLengthInput;
+  CharacterTypeInput: CharacterTypeInput;
+  GenreTypeInput: GenreTypeInput;
+  WritingPromptInput: WritingPromptInput;
+  PlotDeviceInput: PlotDeviceInput;
+  StoryStageInput: StoryStageInput;
   Subscription: ResolverTypeWrapper<{}>;
 };
 
@@ -333,18 +562,44 @@ export type ResolversParentTypes = {
   StoryLength: StoryLength;
   Int: Scalars['Int'];
   StoryLengthType: StoryLengthType;
+  CharacterType: CharacterType;
+  CharacterListType: CharacterListType;
+  CharacterRoleType: CharacterRoleType;
+  GenreType: GenreType;
+  GenreListType: GenreListType;
+  WritingPrompt: WritingPrompt;
+  PlotDevice: PlotDevice;
+  StoryStage: StoryStage;
+  StoryStageType: StoryStageType;
   Mutation: {};
   AuthPayload: AuthPayload;
   SocialUserInput: SocialUserInput;
   UserInput: UserInput;
   NotificationInput: NotificationInput;
   StoryLengthInput: StoryLengthInput;
+  CharacterTypeInput: CharacterTypeInput;
+  GenreTypeInput: GenreTypeInput;
+  WritingPromptInput: WritingPromptInput;
+  PlotDeviceInput: PlotDeviceInput;
+  StoryStageInput: StoryStageInput;
   Subscription: {};
 };
 
 export type AuthPayloadResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = {
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type CharacterTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterType'] = ResolversParentTypes['CharacterType']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['CharacterListType']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['CharacterRoleType']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  examples?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -355,6 +610,16 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
+
+export type GenreTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['GenreType'] = ResolversParentTypes['GenreType']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['GenreListType']>, ParentType, ContextType>;
+  keywords?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
 
 export type MutationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signInEmail?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationSignInEmailArgs, 'email' | 'password'>>;
@@ -367,6 +632,24 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   addStoryLength?: Resolver<Maybe<Array<Maybe<ResolversTypes['StoryLength']>>>, ParentType, ContextType, RequireFields<MutationAddStoryLengthArgs, 'storyLength'>>;
   updateStoryLength?: Resolver<Maybe<ResolversTypes['StoryLength']>, ParentType, ContextType, RequireFields<MutationUpdateStoryLengthArgs, 'storyLength'>>;
   deleteStoryLength?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteStoryLengthArgs, 'storyLengthId'>>;
+  addCharacterType?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterType']>>>, ParentType, ContextType, RequireFields<MutationAddCharacterTypeArgs, 'characterType'>>;
+  updateCharacterType?: Resolver<Maybe<ResolversTypes['CharacterType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterTypeArgs, 'characterType'>>;
+  deleteCharacterType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterTypeArgs, 'characterTypeId'>>;
+  addGenreType?: Resolver<Maybe<Array<Maybe<ResolversTypes['GenreType']>>>, ParentType, ContextType, RequireFields<MutationAddGenreTypeArgs, 'genreType'>>;
+  updateGenreType?: Resolver<Maybe<ResolversTypes['GenreType']>, ParentType, ContextType, RequireFields<MutationUpdateGenreTypeArgs, 'genreType'>>;
+  deleteGenreType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteGenreTypeArgs, 'genreTypeId'>>;
+  addWritingPrompt?: Resolver<Maybe<Array<Maybe<ResolversTypes['WritingPrompt']>>>, ParentType, ContextType, RequireFields<MutationAddWritingPromptArgs, 'writingPrompt'>>;
+  updateWritingPrompt?: Resolver<Maybe<ResolversTypes['WritingPrompt']>, ParentType, ContextType, RequireFields<MutationUpdateWritingPromptArgs, 'writingPrompt'>>;
+  deleteWritingPrompt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteWritingPromptArgs, 'writingPromptId'>>;
+  bulkAddWritingPrompt?: Resolver<Maybe<Array<Maybe<ResolversTypes['WritingPrompt']>>>, ParentType, ContextType, RequireFields<MutationBulkAddWritingPromptArgs, 'writingPrompts'>>;
+  addPlotDevice?: Resolver<Maybe<Array<Maybe<ResolversTypes['PlotDevice']>>>, ParentType, ContextType, RequireFields<MutationAddPlotDeviceArgs, 'plotDevice'>>;
+  updatePlotDevice?: Resolver<Maybe<ResolversTypes['PlotDevice']>, ParentType, ContextType, RequireFields<MutationUpdatePlotDeviceArgs, 'plotDevice'>>;
+  deletePlotDevice?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeletePlotDeviceArgs, 'plotDeviceId'>>;
+  bulkAddPlotDevice?: Resolver<Maybe<Array<Maybe<ResolversTypes['PlotDevice']>>>, ParentType, ContextType, RequireFields<MutationBulkAddPlotDeviceArgs, 'plotDevices'>>;
+  addStoryStage?: Resolver<Maybe<Array<Maybe<ResolversTypes['StoryStage']>>>, ParentType, ContextType, RequireFields<MutationAddStoryStageArgs, 'storyStage'>>;
+  updateStoryStage?: Resolver<Maybe<ResolversTypes['StoryStage']>, ParentType, ContextType, RequireFields<MutationUpdateStoryStageArgs, 'storyStage'>>;
+  deleteStoryStage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteStoryStageArgs, 'storyStageId'>>;
+  bulkAddStoryStage?: Resolver<Maybe<Array<Maybe<ResolversTypes['StoryStage']>>>, ParentType, ContextType, RequireFields<MutationBulkAddStoryStageArgs, 'storyStages'>>;
 };
 
 export type NotificationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -376,6 +659,17 @@ export type NotificationResolvers<ContextType = MyContext, ParentType extends Re
   os?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type PlotDeviceResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['PlotDevice'] = ResolversParentTypes['PlotDevice']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  plot?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  definition?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  example?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -394,6 +688,11 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
   notifications?: Resolver<Array<ResolversTypes['Notification']>, ParentType, ContextType>;
   storyLength?: Resolver<Array<Maybe<ResolversTypes['StoryLength']>>, ParentType, ContextType>;
+  characterType?: Resolver<Array<Maybe<ResolversTypes['CharacterType']>>, ParentType, ContextType>;
+  genreType?: Resolver<Array<Maybe<ResolversTypes['GenreType']>>, ParentType, ContextType>;
+  writingPrompt?: Resolver<Array<Maybe<ResolversTypes['WritingPrompt']>>, ParentType, ContextType>;
+  plotDevices?: Resolver<Array<Maybe<ResolversTypes['PlotDevice']>>, ParentType, ContextType>;
+  storyStages?: Resolver<Array<Maybe<ResolversTypes['StoryStage']>>, ParentType, ContextType>;
 };
 
 export type StoryLengthResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['StoryLength'] = ResolversParentTypes['StoryLength']> = {
@@ -402,6 +701,18 @@ export type StoryLengthResolvers<ContextType = MyContext, ParentType extends Res
   maxWords?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   avChapters?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['StoryLengthType']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type StoryStageResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['StoryStage'] = ResolversParentTypes['StoryStage']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  stage?: Resolver<Maybe<ResolversTypes['StoryStageType']>, ParentType, ContextType>;
+  summary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  storyOrder?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  plottingOrder?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -434,17 +745,32 @@ export type UserResolvers<ContextType = MyContext, ParentType extends ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type WritingPromptResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['WritingPrompt'] = ResolversParentTypes['WritingPrompt']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  prompt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  genres?: Resolver<Maybe<Array<Maybe<ResolversTypes['GenreListType']>>>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type Resolvers<ContextType = MyContext> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
+  CharacterType?: CharacterTypeResolvers<ContextType>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
+  GenreType?: GenreTypeResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Notification?: NotificationResolvers<ContextType>;
+  PlotDevice?: PlotDeviceResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   StoryLength?: StoryLengthResolvers<ContextType>;
+  StoryStage?: StoryStageResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  WritingPrompt?: WritingPromptResolvers<ContextType>;
 };
 
 

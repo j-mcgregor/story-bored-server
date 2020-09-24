@@ -1,7 +1,10 @@
 # import User from "user.graphql"
 # import Notification from "notification.graphql"
-# import StoryLength from "storyLength.graphql"
 # import Post from "post.graphql"
+# import StoryLength from "storyLength.graphql"
+# import CharacterType from "characterType.graphql"
+# import GenreType from "genres.graphql"
+# import WritingPrompt, PlotDevice, StoryStage from "data.graphql"
 
 type Query {
     users: [User!]!
@@ -11,6 +14,17 @@ type Query {
     # STORY
     # -- length
     storyLength: [StoryLength]!
+    # -- character type
+    characterType: [CharacterType]!
+    # -- genre type
+    genreType: [GenreType]!
+    # DATA
+    # -- wiritng prompt
+    writingPrompt: [WritingPrompt]!
+    # -- plot devices
+    plotDevices: [PlotDevice]!
+    # -- story stages
+    storyStages: [StoryStage]!
 }
 
 type Mutation {
@@ -26,6 +40,30 @@ type Mutation {
     addStoryLength(storyLength: StoryLengthInput!): [StoryLength]
     updateStoryLength(storyLength: StoryLengthInput!): StoryLength
     deleteStoryLength(storyLengthId: String!): String
+    # -- character type
+    addCharacterType(characterType: CharacterTypeInput!): [CharacterType]
+    updateCharacterType(characterType: CharacterTypeInput!): CharacterType
+    deleteCharacterType(characterTypeId: String!): String
+    # -- genre type
+    addGenreType(genreType: GenreTypeInput!): [GenreType]
+    updateGenreType(genreType: GenreTypeInput!): GenreType
+    deleteGenreType(genreTypeId: String!): String
+    # DATA
+    # -- writing prompts
+    addWritingPrompt(writingPrompt: WritingPromptInput!): [WritingPrompt]
+    updateWritingPrompt(writingPrompt: WritingPromptInput!): WritingPrompt
+    deleteWritingPrompt(writingPromptId: String!): String
+    bulkAddWritingPrompt(writingPrompts: [WritingPromptInput]!): [WritingPrompt]
+    # -- plot devices
+    addPlotDevice(plotDevice: PlotDeviceInput!): [PlotDevice]
+    updatePlotDevice(plotDevice: PlotDeviceInput!): PlotDevice
+    deletePlotDevice(plotDeviceId: String!): String
+    bulkAddPlotDevice(plotDevices: [PlotDeviceInput]!): [PlotDevice]
+    # -- story stage
+    addStoryStage(storyStage: StoryStageInput!): [StoryStage]
+    updateStoryStage(storyStage: StoryStageInput!): StoryStage
+    deleteStoryStage(storyStageId: String!): String
+    bulkAddStoryStage(storyStages: [StoryStageInput]!): [StoryStage]
 }
 
 type Subscription {

@@ -5,6 +5,11 @@ generates:
     src/generated/graphql.ts:
         config:
             contextType: ../context#MyContext
+            enumValues:
+                CharacterListType: ./src/models/story/CharacterType#CharacterListType
+                CharacterRoleType: ./src/models/story/CharacterLype#CharacterRoleType
+                GenreListType: ./src/models/story/GenreListType#GenreListType
+                StoryStageType: ./src/models/data/Stage#StoryStageType
         plugins:
             - 'typescript'
             - 'typescript-resolvers'

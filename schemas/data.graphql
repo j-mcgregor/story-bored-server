@@ -1,0 +1,73 @@
+# import GenreListType from "genres.graphql"
+
+scalar DateTime
+# -------------------------------
+
+type WritingPrompt {
+    id: String
+    prompt: String
+    genres: [GenreListType]
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input WritingPromptInput {
+    id: String
+    prompt: String
+    genres: [GenreListType]
+}
+
+# -------------------------------
+
+type PlotDevice {
+    id: String
+    plot: String
+    definition: String
+    example: String
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input PlotDeviceInput {
+    id: String
+    plot: String
+    definition: String
+    example: String
+}
+
+# -------------------------------
+
+enum StoryStageType {
+    STASIS
+    TRIGGER
+    QUEST
+    BOLT
+    SHIFT
+    DEFEAT
+    POWER
+    RESOLUTION
+}
+
+type StoryStage {
+    id: String
+    stage: StoryStageType
+    summary: String
+    storyOrder: Int
+    plottingOrder: Int
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input StoryStageInput {
+    id: String
+    stage: StoryStageType
+    summary: String
+    storyOrder: Int
+    plottingOrder: Int
+}

@@ -1,0 +1,33 @@
+scalar DateTime
+
+enum GenreListType {
+    SCIFI
+    CRIME
+    HORROR
+    ROMANCE
+    FANTASY
+    RELIGIOUS
+    HISTORICAL
+    INSPIRATION
+}
+
+type GenreType {
+    id: ID!
+    name: GenreListType
+    keywords: [String]
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input GenreTypeInput {
+    id: ID
+    name: GenreListType
+    keywords: [String]
+}
+
+# create the schema
+# if enum, add to codegen.yml
+# Add the model
+# Add the resolver (and add to index)

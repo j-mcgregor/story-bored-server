@@ -1,0 +1,41 @@
+scalar DateTime
+
+enum CharacterListType {
+    ANTAGONIST
+    CONFIDANTE
+    DEUTERAGONIST
+    DYNAMIC_CHANGING
+    FOIL
+    LOVE_INTEREST
+    PROTAGONIST
+    ROUND
+    STATIC_UNCHANGING
+    STOCK
+    SYMBOLIC
+    TERTIARY
+}
+
+enum CharacterRoleType {
+    ROLE
+    QUALITY
+}
+
+type CharacterType {
+    id: ID!
+    name: CharacterListType
+    category: CharacterRoleType
+    description: String
+    examples: [String]!
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input CharacterTypeInput {
+    id: ID
+    name: CharacterListType
+    category: CharacterRoleType
+    description: String
+    examples: [String]!
+}
