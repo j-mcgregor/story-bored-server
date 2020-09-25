@@ -71,3 +71,23 @@ input StoryStageInput {
     storyOrder: Int
     plottingOrder: Int
 }
+
+# -------------------------------
+
+type StoryScene {
+    id: String
+    defaultStage: StoryStageType
+    defaultScene: Int
+    description: String
+
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+}
+
+input StorySceneInput {
+    id: String
+    defaultStage: StoryStageType
+    defaultScene: Int
+    description: String
+}

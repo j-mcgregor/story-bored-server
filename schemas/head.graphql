@@ -1,0 +1,16 @@
+# import GenreType from "genres.graphql"
+# import StoryLength from "storyLength.graphql"
+# import WritingPrompt from "data.graphql"
+
+type Head {
+    genre: GenreType
+    prompt: WritingPrompt
+    length: StoryLength
+}
+
+input HeadInput {
+    genre: [GenreListType]
+    prompt: Boolean
+    length: StoryLengthType
+    keywords: Int
+}

@@ -1,10 +1,13 @@
+# ---- PRIMITVE ----
 # import User from "user.graphql"
 # import Notification from "notification.graphql"
 # import Post from "post.graphql"
 # import StoryLength from "storyLength.graphql"
 # import CharacterType from "characterType.graphql"
 # import GenreType from "genres.graphql"
-# import WritingPrompt, PlotDevice, StoryStage from "data.graphql"
+# import WritingPrompt, PlotDevice, StoryStage, StoryScene from "data.graphql"
+# ---- COMPLEX ----
+# import Head from "head.graphql"
 
 type Query {
     users: [User!]!
@@ -25,6 +28,8 @@ type Query {
     plotDevices: [PlotDevice]!
     # -- story stages
     storyStages: [StoryStage]!
+    # -- story scenes
+    storyScenes: [StoryScene]!
 }
 
 type Mutation {
@@ -64,6 +69,14 @@ type Mutation {
     updateStoryStage(storyStage: StoryStageInput!): StoryStage
     deleteStoryStage(storyStageId: String!): String
     bulkAddStoryStage(storyStages: [StoryStageInput]!): [StoryStage]
+    # -- story stage
+    addStoryScene(storyScene: StorySceneInput!): [StoryScene]
+    updateStoryScene(storyScene: StorySceneInput!): StoryScene
+    deleteStoryScene(storySceneId: String!): String
+    bulkAddStoryScene(storyScenes: [StorySceneInput]!): [StoryScene]
+    # STORY GENERATION
+    # -- head
+    createHead(meta: HeadInput): Head
 }
 
 type Subscription {

@@ -6,6 +6,9 @@ import GenreModel from './story/genre'
 import WritingPrompt from './data/prompts'
 import PlotDevices from './data/plotDevices'
 import StoryStages from './data/stages'
+import StoryScenes from './data/storyScenes'
+// GENRATE
+import Head from './generate/head'
 
 export const allResolvers = [
     Notification,
@@ -18,6 +21,8 @@ export const allResolvers = [
     WritingPrompt,
     PlotDevices,
     StoryStages,
+    StoryScenes,
+    Head,
 ]
 
 export default {
@@ -29,4 +34,6 @@ export default {
     WritingPrompt,
     PlotDevices,
     StoryStages,
+    StoryScenes,
+    Head,
 }

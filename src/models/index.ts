@@ -9,6 +9,7 @@ import GenreType, { GenreModelStatic } from './story/Genre'
 import WritingPrompt, { WritingPromptModelStatic } from './data/Prompt'
 import PlotDevice, { PlotDeviceModelStatic } from './data/PlotDevice'
 import StoryStage, { StoryStageModelStatic } from './data/Stage'
+import StoryScene, { StorySceneModelStatic } from './data/StoryScene'
 
 export default {
     Notification,
@@ -20,6 +21,7 @@ export default {
     WritingPrompt,
     PlotDevice,
     StoryStage,
+    StoryScene,
 }
 
 export interface ModelType {
@@ -32,4 +34,5 @@ export interface ModelType {
     WritingPrompt: WritingPromptModelStatic
     PlotDevice: PlotDeviceModelStatic
     StoryStage: StoryStageModelStatic
+    StoryScene: StorySceneModelStatic
 }
