@@ -4,7 +4,7 @@ import sequelize from '../../db'
 
 const { UUID, UUIDV1, TEXT, ENUM, INTEGER } = DataTypes
 
-export enum StoryStageType {
+export enum StoryStageEnum {
     STASIS = 'STASIS',
     TRIGGER = 'TRIGGER',
     QUEST = 'QUEST',
@@ -24,11 +24,11 @@ const {
     DEFEAT,
     POWER,
     RESOLUTION,
-} = StoryStageType
+} = StoryStageEnum
 
 export class StoryStage extends Model {
     public id: string
-    public stage: StoryStageType
+    public stage: StoryStageEnum
     public summary: string
     public storyOrder: number
     public plottingOrder: number

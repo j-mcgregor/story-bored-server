@@ -1,7 +1,7 @@
 import { BuildOptions, DataTypes, Model } from 'sequelize'
 
 import sequelize from '../../db'
-import { StoryStageType } from './Stage'
+import { StoryStageEnum } from './Stage'
 
 const { UUID, UUIDV1, TEXT, ENUM, INTEGER } = DataTypes
 
@@ -14,11 +14,11 @@ const {
     DEFEAT,
     POWER,
     RESOLUTION,
-} = StoryStageType
+} = StoryStageEnum
 
 export class StoryScene extends Model {
     public id: string
-    public defaultStage: StoryStageType
+    public defaultStage: StoryStageEnum
     public defaultScene: number
     public description: string
 

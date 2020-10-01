@@ -4,7 +4,7 @@ import sequelize from '../../db'
 
 const { UUID, UUIDV1, ENUM, INTEGER } = DataTypes
 
-enum StoryLengthType {
+export enum StoryLengthType {
     Flash = 'FLASH',
     Short = 'SHORT',
     Novella = 'NOVELLA',

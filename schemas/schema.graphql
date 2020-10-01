@@ -5,7 +5,7 @@
 # import StoryLength from "storyLength.graphql"
 # import CharacterType from "characterType.graphql"
 # import GenreType from "genres.graphql"
-# import WritingPrompt, PlotDevice, StoryStage, StoryScene from "data.graphql"
+# import WritingPrompt, PlotDevice, StageType, StoryScene from "data.graphql"
 # ---- COMPLEX ----
 # import Head from "head.graphql"
 
@@ -27,7 +27,7 @@ type Query {
     # -- plot devices
     plotDevices: [PlotDevice]!
     # -- story stages
-    storyStages: [StoryStage]!
+    storyStages: [StageType]!
     # -- story scenes
     storyScenes: [StoryScene]!
 }
@@ -46,8 +46,8 @@ type Mutation {
     updateStoryLength(storyLength: StoryLengthInput!): StoryLength
     deleteStoryLength(storyLengthId: String!): String
     # -- character type
-    addCharacterType(characterType: CharacterTypeInput!): [CharacterType]
-    updateCharacterType(characterType: CharacterTypeInput!): CharacterType
+    addCharacterType(characterType: CharacterInput!): [CharacterType]
+    updateCharacterType(characterType: CharacterInput!): CharacterType
     deleteCharacterType(characterTypeId: String!): String
     # -- genre type
     addGenreType(genreType: GenreTypeInput!): [GenreType]
@@ -65,10 +65,10 @@ type Mutation {
     deletePlotDevice(plotDeviceId: String!): String
     bulkAddPlotDevice(plotDevices: [PlotDeviceInput]!): [PlotDevice]
     # -- story stage
-    addStoryStage(storyStage: StoryStageInput!): [StoryStage]
-    updateStoryStage(storyStage: StoryStageInput!): StoryStage
+    addStoryStage(storyStage: StoryStageInput!): [StageType]
+    updateStoryStage(storyStage: StoryStageInput!): StageType
     deleteStoryStage(storyStageId: String!): String
-    bulkAddStoryStage(storyStages: [StoryStageInput]!): [StoryStage]
+    bulkAddStoryStage(storyStages: [StoryStageInput]!): [StageType]
     # -- story stage
     addStoryScene(storyScene: StorySceneInput!): [StoryScene]
     updateStoryScene(storyScene: StorySceneInput!): StoryScene
@@ -77,9 +77,69 @@ type Mutation {
     # STORY GENERATION
     # -- head
     createHead(meta: HeadInput): Head
+    # -- generate structure
+    generateSections(
+        type: StructureTypeEnum
+        prologue: Boolean
+        epilogue: Boolean
+    ): [SectionType]
+    generateSectionsWithStages(
+        type: StructureTypeEnum
+        prologue: Boolean
+        epilogue: Boolean
+    ): [SectionType]
+    generateSectionsWithChapters(
+        type: StructureTypeEnum
+        prologue: Boolean
+        epilogue: Boolean
+        numberOfChapters: Int
+        nested: Boolean
+        length: StoryLengthType
+    ): [SectionType]
 }
 
 type Subscription {
     userSignedIn: User
     userUpdated: User
+}
+
+# ----- TYPES --------------------------------
+
+enum StructureTypeEnum {
+    TRADITIONAL
+}
+
+input BodyStructureTypeInput {
+    type: StructureTypeEnum
+    prologue: Boolean
+    epilogue: Boolean
+}
+
+type SectionType {
+    section: Int
+    name: String
+    stages: [StageType]
+    chapters: [ChapterType]
+    scenes: [SceneType]
+    avMinWordsPerSection: Int
+    avMaxWordsPerSection: Int
+    avChaptersPerSection: Int
+}
+
+input SectionInput {
+    section: Int
+    name: String
+}
+
+type ChapterType {
+    chapter: Int
+    avMinWordsPerChapter: Int
+    avMaxWordsPerChapter: Int
+    scenes: [SceneType]
+}
+
+type SceneType {
+    defaultStage: String
+    defaultScene: Int
+    description: String
 }

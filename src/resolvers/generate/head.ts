@@ -1,9 +1,5 @@
-import {
-    GenreType,
-    Head,
-    Resolvers,
-    WritingPrompt,
-} from '../../generated/graphql'
+import sequelize from '../../db'
+import { Head, Resolvers, WritingPrompt } from '../../generated/graphql'
 
 function getRandom(arr: string[], n: number) {
     const result = new Array(n)
@@ -26,13 +22,11 @@ const resolver: Resolvers = {
             let prompt = {} as WritingPrompt
             try {
                 if (args.meta.prompt) {
-                    prompt = await models.WritingPrompt.findAll({
+                    prompt = await models.WritingPrompt.findOne({
                         where: {
                             genres: args.meta.genre,
                         },
-                    }).then(p => {
-                        const rand = Math.floor(Math.random() * p.length)
-                        return p[rand]
+                        order: sequelize.random(),
                     })
                 }
 

@@ -6,10 +6,11 @@ generates:
         config:
             contextType: ../context#MyContext
             enumValues:
-                CharacterListType: ./src/models/story/CharacterType#CharacterListType
-                CharacterRoleType: ./src/models/story/CharacterLype#CharacterRoleType
+                CharacterListEnum: ./src/models/story/CharacterType#CharacterListEnum
+                CharacterRoleEnum: ./src/models/story/CharacterLype#CharacterRoleEnum
                 GenreListType: ./src/models/story/GenreListType#GenreListType
-                StoryStageType: ./src/models/data/Stage#StoryStageType
+                StoryStageEnum: ./src/models/data/Stage#StoryStageEnum
+                StructureTypeEnum: ./src/controllers/generators/structure#StructureTypeEnums
         plugins:
             - 'typescript'
             - 'typescript-resolvers'

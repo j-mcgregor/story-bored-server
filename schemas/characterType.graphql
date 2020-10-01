@@ -1,6 +1,6 @@
 scalar DateTime
 
-enum CharacterListType {
+enum CharacterListEnum {
     ANTAGONIST
     CONFIDANTE
     DEUTERAGONIST
@@ -15,15 +15,15 @@ enum CharacterListType {
     TERTIARY
 }
 
-enum CharacterRoleType {
+enum CharacterRoleEnum {
     ROLE
     QUALITY
 }
 
 type CharacterType {
     id: ID!
-    name: CharacterListType
-    category: CharacterRoleType
+    name: CharacterListEnum
+    category: CharacterRoleEnum
     description: String
     examples: [String]!
 
@@ -32,10 +32,10 @@ type CharacterType {
     deletedAt: DateTime
 }
 
-input CharacterTypeInput {
+input CharacterInput {
     id: ID
-    name: CharacterListType
-    category: CharacterRoleType
+    name: CharacterListEnum
+    category: CharacterRoleEnum
     description: String
     examples: [String]!
 }

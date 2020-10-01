@@ -9,6 +9,7 @@ import StoryStages from './data/stages'
 import StoryScenes from './data/storyScenes'
 // GENRATE
 import Head from './generate/head'
+import Structure from './generate/structure'
 
 export const allResolvers = [
     Notification,
@@ -22,7 +23,9 @@ export const allResolvers = [
     PlotDevices,
     StoryStages,
     StoryScenes,
+    // GENERATE
     Head,
+    Structure,
 ]
 
 export default {
@@ -35,5 +38,7 @@ export default {
     PlotDevices,
     StoryStages,
     StoryScenes,
+    // GENERATE
     Head,
+    Structure,
 }

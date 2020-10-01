@@ -1,11 +1,11 @@
-import { StoryStage, Resolvers } from '../../generated/graphql'
+import { StageType, Resolvers } from '../../generated/graphql'
 
 const STAGE_UPDATED = 'STAGE_UPDATED'
 const STAGE_DELETED = 'STAGE_DELETED'
 
 const resolver: Resolvers = {
     Query: {
-        storyStages: async (_, __, { models }): Promise<StoryStage[]> => {
+        storyStages: async (_, __, { models }): Promise<StageType[]> => {
             const { StoryStage: storyStageModel } = models
             try {
                 const allStoryStages = await storyStageModel.findAll()
@@ -17,7 +17,7 @@ const resolver: Resolvers = {
         },
     },
     Mutation: {
-        addStoryStage: async (_, args, { models }): Promise<StoryStage[]> => {
+        addStoryStage: async (_, args, { models }): Promise<StageType[]> => {
             const { StoryStage: storyStageModel } = models
 
             const stage = await storyStageModel.findOne({
@@ -44,7 +44,7 @@ const resolver: Resolvers = {
             _,
             args,
             { models, pubsub }
-        ): Promise<StoryStage> => {
+        ): Promise<StageType> => {
             const { StoryStage: storyStageModel } = models
 
             try {
@@ -106,7 +106,7 @@ const resolver: Resolvers = {
             _,
             args,
             { models }
-        ): Promise<StoryStage[]> => {
+        ): Promise<StageType[]> => {
             const { StoryStage: storyStageModel } = models
 
             try {

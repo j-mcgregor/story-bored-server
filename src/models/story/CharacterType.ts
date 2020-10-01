@@ -4,7 +4,7 @@ import sequelize from '../../db'
 
 const { UUID, UUIDV1, ENUM, STRING, ARRAY, TEXT } = DataTypes
 
-enum CharacterListType {
+enum CharacterListEnum {
     ANTAGONIST = 'ANTAGONIST',
     CONFIDANTE = 'CONFIDANTE',
     DEUTERAGONIST = 'DEUTERAGONIST',
@@ -19,7 +19,7 @@ enum CharacterListType {
     TERTIARY = 'TERTIARY',
 }
 
-enum CharacterRoleType {
+enum CharacterRoleEnum {
     ROLE = 'ROLE',
     QUALITY = 'QUALITY',
 }
@@ -37,14 +37,14 @@ const {
     SYMBOLIC,
     STOCK,
     TERTIARY,
-} = CharacterListType
+} = CharacterListEnum
 
 export class CharacterType extends Model {
     public id: string
     public description: string
     public examples: string[]
-    public category: CharacterRoleType
-    public name: CharacterListType
+    public category: CharacterRoleEnum
+    public name: CharacterListEnum
     public readonly createdAt!: Date
     public readonly updatedAt!: Date
     public readonly deletedAt: Date
@@ -72,7 +72,7 @@ CharacterType.init(
             STOCK,
             TERTIARY
         ),
-        category: ENUM(CharacterRoleType.ROLE, CharacterRoleType.QUALITY),
+        category: ENUM(CharacterRoleEnum.ROLE, CharacterRoleEnum.QUALITY),
         description: TEXT,
         examples: ARRAY(STRING),
     },

@@ -41,7 +41,7 @@ input PlotDeviceInput {
 
 # -------------------------------
 
-enum StoryStageType {
+enum StoryStageEnum {
     STASIS
     TRIGGER
     QUEST
@@ -52,12 +52,14 @@ enum StoryStageType {
     RESOLUTION
 }
 
-type StoryStage {
+type StageType {
     id: String
-    stage: StoryStageType
+    stage: StoryStageEnum
     summary: String
     storyOrder: Int
     plottingOrder: Int
+    chapters: [ChapterType]
+    scenes: [SceneType]
 
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -66,7 +68,7 @@ type StoryStage {
 
 input StoryStageInput {
     id: String
-    stage: StoryStageType
+    stage: StoryStageEnum
     summary: String
     storyOrder: Int
     plottingOrder: Int
@@ -76,7 +78,7 @@ input StoryStageInput {
 
 type StoryScene {
     id: String
-    defaultStage: StoryStageType
+    defaultStage: StoryStageEnum
     defaultScene: Int
     description: String
 
@@ -87,7 +89,7 @@ type StoryScene {
 
 input StorySceneInput {
     id: String
-    defaultStage: StoryStageType
+    defaultStage: StoryStageEnum
     defaultScene: Int
     description: String
 }
