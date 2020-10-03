@@ -10,6 +10,13 @@ import WritingPrompt, { WritingPromptModelStatic } from './data/Prompt'
 import PlotDevice, { PlotDeviceModelStatic } from './data/PlotDevice'
 import StoryStage, { StoryStageModelStatic } from './data/Stage'
 import StoryScene, { StorySceneModelStatic } from './data/StoryScene'
+// CHARACTER
+import CharacterBodyPart, {
+    CharacterBodyPartModelStatic,
+} from './character/BodyPart'
+import CharacterDescription, {
+    CharacterDescriptionModelStatic,
+} from './character/Description'
 
 export default {
     Notification,
@@ -22,6 +29,9 @@ export default {
     PlotDevice,
     StoryStage,
     StoryScene,
+    // CHARACTER
+    CharacterBodyPart,
+    CharacterDescription,
 }
 
 export interface ModelType {
@@ -35,4 +45,7 @@ export interface ModelType {
     PlotDevice: PlotDeviceModelStatic
     StoryStage: StoryStageModelStatic
     StoryScene: StorySceneModelStatic
+    // CHARACTER
+    CharacterBodyPart: CharacterBodyPartModelStatic
+    CharacterDescription: CharacterDescriptionModelStatic
 }

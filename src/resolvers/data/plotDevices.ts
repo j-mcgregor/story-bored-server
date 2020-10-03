@@ -108,7 +108,6 @@ const resolver: Resolvers = {
             { models }
         ): Promise<PlotDevice[]> => {
             const { PlotDevice: plotDeviceModel } = models
-            console.log(args.plotDevices.length)
 
             try {
                 await plotDeviceModel.bulkCreate(args.plotDevices)

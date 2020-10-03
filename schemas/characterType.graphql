@@ -39,3 +39,102 @@ input CharacterInput {
     description: String
     examples: [String]!
 }
+
+# DESCRIPTION
+enum GenderTraditionalEnum {
+    MALE
+    FEMALE
+}
+
+enum GenderModernEnum {
+    AGENDER
+    ANDROGYNE
+    ANDROGYNOUS
+    BIGENDER
+    CIS
+    CISGENDER
+    CIS_FEMALE
+    CIS_MALE
+    CIS_MAN
+    CIS_WOMAN
+    CISGENDER_FEMALE
+    CISGENDER_MALE
+    CISGENDER_MAN
+    CISGENDER_WOMAN
+    FEMALE_TO_MALE
+    FTM
+    GENDER_FLUID
+    GENDER_NONCONFORMING
+    GENDER_QUESTIONING
+    GENDER_VARIANT
+    GENDERQUEER
+    INTERSEX
+    MALE_TO_FEMALE
+    MTF
+    NEITHER
+    NEUTROIS
+    NON_BINARY
+    OTHER
+    PANGENDER
+    TRANS
+    TRANS_FEMALE
+    TRANS_MALE
+    TRANS_MAN
+    TRANS_PERSON
+    TRANS_WOMAN
+    TRANSFEMININE
+    TRANSGENDER
+    TRANSGENDER_FEMALE
+    TRANSGENDER_MALE
+    TRANSGENDER_MAN
+    TRANSGENDER_PERSON
+    TRANSGENDER_WOMAN
+    TRANSMASCULINE
+    TRANSSEXUAL
+    TRANSSEXUAL_FEMALE
+    TRANSSEXUAL_MALE
+    TRANSSEXUAL_MAN
+    TRANSSEXUAL_PERSON
+    TRANSSEXUAL_WOMAN
+    TWO_SPIRIT
+}
+
+enum FeatureEnum {
+    AGE
+    BUILD
+    COLOR
+    EYEBROWS
+    FEATURES
+    HAIR
+    HEIGHT
+    MOUTH
+    NOSE
+    SHAPE
+    SKINTONE
+    SKINTYPE
+    TYPE
+}
+
+# BODY PARTS
+
+type CharacterBodyPartsType {
+    id: String
+    part: String
+}
+
+input CharacterBodyPartsInput {
+    id: String
+    part: String
+}
+
+# DESCRIPTIONS
+
+type CharacterDescriptionsType {
+    id: String
+    description: String
+}
+
+input CharacterDescriptionsInput {
+    id: String
+    description: String
+}

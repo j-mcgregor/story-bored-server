@@ -10,6 +10,9 @@ import StoryScenes from './data/storyScenes'
 // GENRATE
 import Head from './generate/head'
 import Structure from './generate/structure'
+// CHARACTER
+import CharacterBodyPart from './character/bodyParts'
+import CharacterDescription from './character/descriptions'
 
 export const allResolvers = [
     Notification,
@@ -26,6 +29,9 @@ export const allResolvers = [
     // GENERATE
     Head,
     Structure,
+    // CHARACTER
+    CharacterBodyPart,
+    CharacterDescription,
 ]
 
 export default {
@@ -41,4 +47,7 @@ export default {
     // GENERATE
     Head,
     Structure,
+    // CHARACTER
+    CharacterBodyPart,
+    CharacterDescription,
 }

@@ -46,6 +46,28 @@ export type ChapterType = {
   scenes?: Maybe<Array<Maybe<SceneType>>>;
 };
 
+export type CharacterBodyPartsInput = {
+  id?: Maybe<Scalars['String']>;
+  part?: Maybe<Scalars['String']>;
+};
+
+export type CharacterBodyPartsType = {
+  __typename?: 'CharacterBodyPartsType';
+  id?: Maybe<Scalars['String']>;
+  part?: Maybe<Scalars['String']>;
+};
+
+export type CharacterDescriptionsInput = {
+  id?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type CharacterDescriptionsType = {
+  __typename?: 'CharacterDescriptionsType';
+  id?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
 export type CharacterInput = {
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<CharacterListEnum>;
@@ -147,6 +169,16 @@ export type Mutation = {
   generateSections?: Maybe<Array<Maybe<SectionType>>>;
   generateSectionsWithStages?: Maybe<Array<Maybe<SectionType>>>;
   generateSectionsWithChapters?: Maybe<Array<Maybe<SectionType>>>;
+  generateSectionsWithScenes?: Maybe<Array<Maybe<SectionType>>>;
+  generateStructure?: Maybe<Array<Maybe<SectionType>>>;
+  addCharacterBodyParts?: Maybe<CharacterBodyPartsType>;
+  updateCharacterBodyParts?: Maybe<CharacterBodyPartsType>;
+  deleteCharacterBodyParts?: Maybe<Scalars['String']>;
+  bulkAddCharacterBodyParts?: Maybe<Array<Maybe<CharacterBodyPartsType>>>;
+  addCharacterDescriptions?: Maybe<CharacterDescriptionsType>;
+  updateCharacterDescriptions?: Maybe<CharacterDescriptionsType>;
+  deleteCharacterDescriptions?: Maybe<Scalars['String']>;
+  bulkAddCharacterDescriptions?: Maybe<Array<Maybe<CharacterDescriptionsType>>>;
 };
 
 
@@ -339,6 +371,69 @@ export type MutationGenerateSectionsWithChaptersArgs = {
   length?: Maybe<StoryLengthType>;
 };
 
+
+export type MutationGenerateSectionsWithScenesArgs = {
+  type?: Maybe<StructureTypeEnum>;
+  prologue?: Maybe<Scalars['Boolean']>;
+  epilogue?: Maybe<Scalars['Boolean']>;
+  numberOfChapters?: Maybe<Scalars['Int']>;
+  nested?: Maybe<Scalars['Boolean']>;
+  length?: Maybe<StoryLengthType>;
+};
+
+
+export type MutationGenerateStructureArgs = {
+  type?: Maybe<StructureTypeEnum>;
+  prologue?: Maybe<Scalars['Boolean']>;
+  epilogue?: Maybe<Scalars['Boolean']>;
+  numberOfChapters?: Maybe<Scalars['Int']>;
+  nested?: Maybe<Scalars['Boolean']>;
+  length?: Maybe<StoryLengthType>;
+  includeStages?: Maybe<Scalars['Boolean']>;
+  includeChapters?: Maybe<Scalars['Boolean']>;
+  includeScenes?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationAddCharacterBodyPartsArgs = {
+  part?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateCharacterBodyPartsArgs = {
+  part?: Maybe<CharacterBodyPartsInput>;
+};
+
+
+export type MutationDeleteCharacterBodyPartsArgs = {
+  part?: Maybe<CharacterBodyPartsInput>;
+};
+
+
+export type MutationBulkAddCharacterBodyPartsArgs = {
+  parts: Array<Maybe<CharacterBodyPartsInput>>;
+};
+
+
+export type MutationAddCharacterDescriptionsArgs = {
+  description?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateCharacterDescriptionsArgs = {
+  description?: Maybe<CharacterDescriptionsInput>;
+};
+
+
+export type MutationDeleteCharacterDescriptionsArgs = {
+  description?: Maybe<CharacterDescriptionsInput>;
+};
+
+
+export type MutationBulkAddCharacterDescriptionsArgs = {
+  descriptions: Array<Maybe<CharacterDescriptionsInput>>;
+};
+
 export type Notification = {
   __typename?: 'Notification';
   id: Scalars['ID'];
@@ -395,6 +490,8 @@ export type Query = {
   plotDevices: Array<Maybe<PlotDevice>>;
   storyStages: Array<Maybe<StageType>>;
   storyScenes: Array<Maybe<StoryScene>>;
+  characterBodyParts: Array<Maybe<CharacterBodyPartsType>>;
+  characterDescriptions: Array<Maybe<CharacterDescriptionsType>>;
 };
 
 
@@ -404,7 +501,7 @@ export type QueryUserArgs = {
 
 export type SceneType = {
   __typename?: 'SceneType';
-  defaultStage?: Maybe<Scalars['String']>;
+  defaultStage?: Maybe<StoryStageEnum>;
   defaultScene?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
 };
@@ -669,6 +766,8 @@ export type ResolversTypes = {
   ChapterType: ResolverTypeWrapper<ChapterType>;
   SceneType: ResolverTypeWrapper<SceneType>;
   StoryScene: ResolverTypeWrapper<StoryScene>;
+  CharacterBodyPartsType: ResolverTypeWrapper<CharacterBodyPartsType>;
+  CharacterDescriptionsType: ResolverTypeWrapper<CharacterDescriptionsType>;
   Mutation: ResolverTypeWrapper<{}>;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   SocialUserInput: SocialUserInput;
@@ -685,6 +784,8 @@ export type ResolversTypes = {
   Head: ResolverTypeWrapper<Head>;
   StructureTypeEnum: StructureTypeEnum;
   SectionType: ResolverTypeWrapper<SectionType>;
+  CharacterBodyPartsInput: CharacterBodyPartsInput;
+  CharacterDescriptionsInput: CharacterDescriptionsInput;
   Subscription: ResolverTypeWrapper<{}>;
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -718,6 +819,8 @@ export type ResolversParentTypes = {
   ChapterType: ChapterType;
   SceneType: SceneType;
   StoryScene: StoryScene;
+  CharacterBodyPartsType: CharacterBodyPartsType;
+  CharacterDescriptionsType: CharacterDescriptionsType;
   Mutation: {};
   AuthPayload: AuthPayload;
   SocialUserInput: SocialUserInput;
@@ -734,6 +837,8 @@ export type ResolversParentTypes = {
   Head: Head;
   StructureTypeEnum: StructureTypeEnum;
   SectionType: SectionType;
+  CharacterBodyPartsInput: CharacterBodyPartsInput;
+  CharacterDescriptionsInput: CharacterDescriptionsInput;
   Subscription: {};
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -750,6 +855,18 @@ export type ChapterTypeResolvers<ContextType = MyContext, ParentType extends Res
   avMinWordsPerChapter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   avMaxWordsPerChapter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   scenes?: Resolver<Maybe<Array<Maybe<ResolversTypes['SceneType']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type CharacterBodyPartsTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterBodyPartsType'] = ResolversParentTypes['CharacterBodyPartsType']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  part?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type CharacterDescriptionsTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterDescriptionsType'] = ResolversParentTypes['CharacterDescriptionsType']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -827,6 +944,16 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   generateSections?: Resolver<Maybe<Array<Maybe<ResolversTypes['SectionType']>>>, ParentType, ContextType, RequireFields<MutationGenerateSectionsArgs, never>>;
   generateSectionsWithStages?: Resolver<Maybe<Array<Maybe<ResolversTypes['SectionType']>>>, ParentType, ContextType, RequireFields<MutationGenerateSectionsWithStagesArgs, never>>;
   generateSectionsWithChapters?: Resolver<Maybe<Array<Maybe<ResolversTypes['SectionType']>>>, ParentType, ContextType, RequireFields<MutationGenerateSectionsWithChaptersArgs, never>>;
+  generateSectionsWithScenes?: Resolver<Maybe<Array<Maybe<ResolversTypes['SectionType']>>>, ParentType, ContextType, RequireFields<MutationGenerateSectionsWithScenesArgs, never>>;
+  generateStructure?: Resolver<Maybe<Array<Maybe<ResolversTypes['SectionType']>>>, ParentType, ContextType, RequireFields<MutationGenerateStructureArgs, never>>;
+  addCharacterBodyParts?: Resolver<Maybe<ResolversTypes['CharacterBodyPartsType']>, ParentType, ContextType, RequireFields<MutationAddCharacterBodyPartsArgs, never>>;
+  updateCharacterBodyParts?: Resolver<Maybe<ResolversTypes['CharacterBodyPartsType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterBodyPartsArgs, never>>;
+  deleteCharacterBodyParts?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterBodyPartsArgs, never>>;
+  bulkAddCharacterBodyParts?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterBodyPartsType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterBodyPartsArgs, 'parts'>>;
+  addCharacterDescriptions?: Resolver<Maybe<ResolversTypes['CharacterDescriptionsType']>, ParentType, ContextType, RequireFields<MutationAddCharacterDescriptionsArgs, never>>;
+  updateCharacterDescriptions?: Resolver<Maybe<ResolversTypes['CharacterDescriptionsType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterDescriptionsArgs, never>>;
+  deleteCharacterDescriptions?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterDescriptionsArgs, never>>;
+  bulkAddCharacterDescriptions?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterDescriptionsType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterDescriptionsArgs, 'descriptions'>>;
 };
 
 export type NotificationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -871,10 +998,12 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   plotDevices?: Resolver<Array<Maybe<ResolversTypes['PlotDevice']>>, ParentType, ContextType>;
   storyStages?: Resolver<Array<Maybe<ResolversTypes['StageType']>>, ParentType, ContextType>;
   storyScenes?: Resolver<Array<Maybe<ResolversTypes['StoryScene']>>, ParentType, ContextType>;
+  characterBodyParts?: Resolver<Array<Maybe<ResolversTypes['CharacterBodyPartsType']>>, ParentType, ContextType>;
+  characterDescriptions?: Resolver<Array<Maybe<ResolversTypes['CharacterDescriptionsType']>>, ParentType, ContextType>;
 };
 
 export type SceneTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['SceneType'] = ResolversParentTypes['SceneType']> = {
-  defaultStage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  defaultStage?: Resolver<Maybe<ResolversTypes['StoryStageEnum']>, ParentType, ContextType>;
   defaultScene?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
@@ -968,6 +1097,8 @@ export type WritingPromptResolvers<ContextType = MyContext, ParentType extends R
 export type Resolvers<ContextType = MyContext> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   ChapterType?: ChapterTypeResolvers<ContextType>;
+  CharacterBodyPartsType?: CharacterBodyPartsTypeResolvers<ContextType>;
+  CharacterDescriptionsType?: CharacterDescriptionsTypeResolvers<ContextType>;
   CharacterType?: CharacterTypeResolvers<ContextType>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
