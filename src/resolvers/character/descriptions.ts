@@ -24,26 +24,14 @@ const resolver: Resolvers = {
     Mutation: {
         addCharacterDescriptions: async (
             _,
-            args,
+            { description },
             { models }
         ): Promise<CharacterDescriptionsType> => {
-            const { CharacterDescription: descriptionModel } = models
-
-            const description = await descriptionModel.findOne({
-                where: {
-                    description: args.description,
-                },
-                raw: true,
-            })
-
-            if (description) {
-                throw new Error('Description already exists. Be more creative')
-            }
-
             try {
-                const newDescription = await descriptionModel.create(
-                    { description: args.description },
-                    { raw: true }
+                const newDescription = await queryUtils.addItem(
+                    models.CharacterDescription,
+                    { description },
+                    ['description', description]
                 )
 
                 return newDescription

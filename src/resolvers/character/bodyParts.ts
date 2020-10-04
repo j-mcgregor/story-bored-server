@@ -22,13 +22,17 @@ const resolver: Resolvers = {
     Mutation: {
         addCharacterBodyParts: async (
             _,
-            args,
+            { part },
             { models }
         ): Promise<CharacterBodyPartsType> => {
-            const { CharacterBodyPart: bodyPartModel } = models
-
             try {
-                return ({} as unknown) as CharacterBodyPartsType
+                const newPart = await queryUtils.addItem(
+                    models.CharacterBodyPart,
+                    { part },
+                    ['part', part]
+                )
+
+                return newPart
             } catch (err) {
                 throw new Error(err)
             }
