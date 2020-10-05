@@ -61,7 +61,7 @@ type Mutation {
     updateStoryLength(storyLength: StoryLengthInput!): StoryLength
     deleteStoryLength(storyLengthId: String!): String
     # -- character type
-    addCharacterType(characterType: CharacterInput!): [CharacterType]
+    addCharacterType(characterType: CharacterInput!): CharacterType
     updateCharacterType(characterType: CharacterInput!): CharacterType
     deleteCharacterType(characterTypeId: String!): String
     # -- genre type
@@ -70,7 +70,7 @@ type Mutation {
     deleteGenreType(genreTypeId: String!): String
     # DATA
     # -- writing prompts
-    addWritingPrompt(writingPrompt: WritingPromptInput!): [WritingPrompt]
+    addWritingPrompt(writingPrompt: WritingPromptInput!): WritingPrompt
     updateWritingPrompt(writingPrompt: WritingPromptInput!): WritingPrompt
     deleteWritingPrompt(writingPromptId: String!): String
     bulkAddWritingPrompt(writingPrompts: [WritingPromptInput]!): [WritingPrompt]
@@ -80,12 +80,12 @@ type Mutation {
     deletePlotDevice(plotDeviceId: String!): String
     bulkAddPlotDevice(plotDevices: [PlotDeviceInput]!): [PlotDevice]
     # -- story stage
-    addStoryStage(storyStage: StoryStageInput!): [StageType]
+    addStoryStage(storyStage: StoryStageInput!): StageType
     updateStoryStage(storyStage: StoryStageInput!): StageType
     deleteStoryStage(storyStageId: String!): String
     bulkAddStoryStage(storyStages: [StoryStageInput]!): [StageType]
     # -- story stage
-    addStoryScene(storyScene: StorySceneInput!): [StoryScene]
+    addStoryScene(storyScene: StorySceneInput!): StoryScene
     updateStoryScene(storyScene: StorySceneInput!): StoryScene
     deleteStoryScene(storySceneId: String!): String
     bulkAddStoryScene(storyScenes: [StorySceneInput]!): [StoryScene]
@@ -145,7 +145,7 @@ type Mutation {
     updateCharacterDescriptions(
         description: CharacterDescriptionsInput
     ): CharacterDescriptionsType
-    deleteCharacterDescriptions(description: CharacterDescriptionsInput): String
+    deleteCharacterDescriptions(descriptionId: String!): String
     bulkAddCharacterDescriptions(
         descriptions: [CharacterDescriptionsInput]!
     ): [CharacterDescriptionsType]

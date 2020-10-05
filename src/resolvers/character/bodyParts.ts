@@ -26,11 +26,13 @@ const resolver: Resolvers = {
             { models }
         ): Promise<CharacterBodyPartsType> => {
             try {
-                const newPart = await queryUtils.addItem(
-                    models.CharacterBodyPart,
-                    { part },
-                    ['part', part]
-                )
+                const newPart = await queryUtils.addItem<
+                    CharacterBodyPartsType
+                >({
+                    model: models.CharacterBodyPart,
+                    item: { part },
+                    checkField: ['part', part],
+                })
 
                 return newPart
             } catch (err) {

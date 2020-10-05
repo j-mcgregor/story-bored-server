@@ -1,15 +1,16 @@
 import { PlotDevice, Resolvers } from '../../generated/graphql'
+import queryUtils from '../utils/queryUtils'
 
-const GENRE_UPDATED = 'GENRE_UPDATED'
-const GENRE_DELETED = 'GENRE_DELETED'
+const DEVICE_UPDATED = 'DEVICE_UPDATED'
+const DEVICE_DELETED = 'DEVICE_DELETED'
 
 const resolver: Resolvers = {
     Query: {
         plotDevices: async (_, __, { models }): Promise<PlotDevice[]> => {
-            const { PlotDevice: plotDeviceModel } = models
             try {
-                const allPlotDevices = await plotDeviceModel.findAll()
-
+                const allPlotDevices = await queryUtils.queryAll(
+                    models.PlotDevice
+                )
                 return allPlotDevices
             } catch (err) {
                 throw new Error(err)
@@ -18,24 +19,14 @@ const resolver: Resolvers = {
     },
     Mutation: {
         addPlotDevice: async (_, args, { models }): Promise<PlotDevice[]> => {
-            const { PlotDevice: plotDeviceModel } = models
-
-            const plotDevice = await plotDeviceModel.findOne({
-                where: {
-                    id: args.plotDevice.id,
-                },
-                raw: true,
-            })
-
-            if (plotDevice) {
-                throw new Error('Plot Device already exists. Be more creative')
-            }
-
             try {
-                await plotDeviceModel.create(args.plotDevice, { raw: true })
-                const allPlotDevices = await plotDeviceModel.findAll()
+                const newDevice = await queryUtils.addItem({
+                    model: models.PlotDevice,
+                    item: args.plotDevice,
+                    checkField: ['plot', args.plotDevice.plot],
+                })
 
-                return allPlotDevices
+                return newDevice
             } catch (err) {
                 throw new Error(err)
             }
@@ -45,25 +36,16 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<PlotDevice> => {
-            const { PlotDevice: plotDeviceModel } = models
-
             try {
-                plotDeviceModel.update(args, {
-                    where: {
-                        id: args.plotDevice.id,
-                    },
-                })
+                const device = await queryUtils.updateItem(
+                    models.CharacterDescription,
+                    args.plotDevice,
+                    ['id', args.plotDevice.id]
+                )
 
-                const plotDevice = await plotDeviceModel.findOne({
-                    where: {
-                        id: args.plotDevice.id,
-                    },
-                    raw: true,
-                })
+                pubsub.publish(DEVICE_UPDATED, { device })
 
-                pubsub.publish(GENRE_UPDATED, { plotDevice })
-
-                return plotDevice
+                return device
             } catch (err) {
                 throw new Error(err)
             }
@@ -73,31 +55,19 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<string> => {
-            const { PlotDevice: plotDeviceModel } = models
-
             try {
-                const plotDevice = await plotDeviceModel.findOne({
-                    where: {
-                        id: args.plotDeviceId,
-                    },
-                    raw: true,
+                const deleted = await queryUtils.deleteItem({
+                    model: models.PlotDevice,
+                    checkField: ['id', args.plotDeviceId],
+                    pubsub,
+                    constant: DEVICE_DELETED,
                 })
 
-                if (!plotDevice) {
-                    throw new Error(
-                        "Plot Device doesn't exist or has been deleted"
-                    )
+                if (typeof deleted === 'string') {
+                    return deleted
+                } else {
+                    throw deleted.message
                 }
-
-                plotDeviceModel.destroy({
-                    where: {
-                        id: args.plotDeviceId,
-                    },
-                })
-
-                pubsub.publish(GENRE_DELETED, { plotDevice })
-
-                return `Plot Device (id: ${plotDevice.id}) successfully deleted`
             } catch (err) {
                 throw new Error(err)
             }
@@ -107,13 +77,16 @@ const resolver: Resolvers = {
             args,
             { models }
         ): Promise<PlotDevice[]> => {
-            const { PlotDevice: plotDeviceModel } = models
-
             try {
-                await plotDeviceModel.bulkCreate(args.plotDevices)
-                const allPlotDevices = await plotDeviceModel.findAll()
+                const allPlotDevices = await queryUtils.bulkAddItem(
+                    models.PlotDevice,
+                    args.plotDevices,
+                    ['plot', 'plot']
+                )
 
-                return allPlotDevices
+                if (Array.isArray(allPlotDevices)) {
+                    return allPlotDevices
+                }
             } catch (err) {
                 throw new Error(err)
             }

@@ -1,16 +1,15 @@
 import { WritingPrompt, Resolvers } from '../../generated/graphql'
+import queryUtils from '../utils/queryUtils'
 
-const GENRE_UPDATED = 'GENRE_UPDATED'
-const GENRE_DELETED = 'GENRE_DELETED'
+const PROMPT_UPDATED = 'PROMPT_UPDATED'
+const PROMPT_DELETED = 'PROMPT_DELETED'
 
 const resolver: Resolvers = {
     Query: {
         writingPrompt: async (_, __, { models }): Promise<WritingPrompt[]> => {
-            const { WritingPrompt: promptModel } = models
             try {
-                const allPrompts = await promptModel.findAll()
-
-                return allPrompts
+                const all = await queryUtils.queryAll(models.WritingPrompt)
+                return all
             } catch (err) {
                 throw new Error(err)
             }
@@ -21,25 +20,17 @@ const resolver: Resolvers = {
             _,
             args,
             { models }
-        ): Promise<WritingPrompt[]> => {
-            const { WritingPrompt: promptModel } = models
-
-            const prompt = await promptModel.findOne({
-                where: {
-                    prompt: args.writingPrompt.prompt,
-                },
-                raw: true,
-            })
-
-            if (prompt) {
-                throw new Error('Prompt already exists. Be more creative')
-            }
-
+        ): Promise<WritingPrompt> => {
             try {
-                await promptModel.create(args.writingPrompt, { raw: true })
-                const allPrompts = await promptModel.findAll()
+                const newDevice: WritingPrompt = await queryUtils.addItem<
+                    WritingPrompt
+                >({
+                    model: models.WritingPrompt,
+                    item: args.writingPrompt,
+                    checkField: ['prompt', args.writingPrompt.prompt],
+                })
 
-                return allPrompts
+                return newDevice
             } catch (err) {
                 throw new Error(err)
             }
@@ -49,23 +40,14 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<WritingPrompt> => {
-            const { WritingPrompt: promptModel } = models
-
             try {
-                promptModel.update(args, {
-                    where: {
-                        id: args.writingPrompt.id,
-                    },
-                })
+                const prompt = await queryUtils.updateItem(
+                    models.WritingPrompt,
+                    args.writingPrompt,
+                    ['id', args.writingPrompt.id]
+                )
 
-                const prompt = await promptModel.findOne({
-                    where: {
-                        id: args.writingPrompt.id,
-                    },
-                    raw: true,
-                })
-
-                pubsub.publish(GENRE_UPDATED, { prompt })
+                pubsub.publish(PROMPT_UPDATED, { prompt })
 
                 return prompt
             } catch (err) {
@@ -77,31 +59,17 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<string> => {
-            const { WritingPrompt: promptModel } = models
-
             try {
-                const prompt = await promptModel.findOne({
-                    where: {
-                        id: args.writingPromptId,
-                    },
-                    raw: true,
+                const deleted = await queryUtils.deleteItem({
+                    model: models.WritingPrompt,
+                    checkField: ['id', args.writingPromptId],
+                    pubsub,
+                    constant: PROMPT_DELETED,
                 })
 
-                if (!prompt) {
-                    throw new Error(
-                        "Writing prompt doesn't exist or has been deleted"
-                    )
+                if (typeof deleted === 'string') {
+                    return deleted
                 }
-
-                promptModel.destroy({
-                    where: {
-                        id: args.writingPromptId,
-                    },
-                })
-
-                pubsub.publish(GENRE_DELETED, { prompt })
-
-                return `Writing Prompt (id: ${prompt.id}) successfully deleted`
             } catch (err) {
                 throw new Error(err)
             }
@@ -111,14 +79,16 @@ const resolver: Resolvers = {
             args,
             { models }
         ): Promise<WritingPrompt[]> => {
-            const { WritingPrompt: promptModel } = models
-            console.log(args.writingPrompts.length)
-
             try {
-                await promptModel.bulkCreate(args.writingPrompts)
-                const allPrompts = await promptModel.findAll()
+                const allPrompts = await queryUtils.bulkAddItem(
+                    models.WritingPrompt,
+                    args.writingPrompts,
+                    ['prompt', 'prompt']
+                )
 
-                return allPrompts
+                if (Array.isArray(allPrompts)) {
+                    return allPrompts
+                }
             } catch (err) {
                 throw new Error(err)
             }

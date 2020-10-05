@@ -1,4 +1,5 @@
 import { StoryScene, Resolvers } from '../../generated/graphql'
+import queryUtils from '../utils/queryUtils'
 
 const SCENE_UPDATED = 'SCENE_UPDATED'
 const SCENE_DELETED = 'SCENE_DELETED'
@@ -6,36 +7,26 @@ const SCENE_DELETED = 'SCENE_DELETED'
 const resolver: Resolvers = {
     Query: {
         storyScenes: async (_, __, { models }): Promise<StoryScene[]> => {
-            const { StoryScene: storySceneModel } = models
             try {
-                const allStoryScenes = await storySceneModel.findAll()
-
-                return allStoryScenes
+                const all = await queryUtils.queryAll(models.StoryScene)
+                return all
             } catch (err) {
                 throw new Error(err)
             }
         },
     },
     Mutation: {
-        addStoryScene: async (_, args, { models }): Promise<StoryScene[]> => {
-            const { StoryScene: storySceneModel } = models
-
-            const defaultScene = await storySceneModel.findOne({
-                where: {
-                    id: args.storyScene.id,
-                },
-                raw: true,
-            })
-
-            if (defaultScene) {
-                throw new Error('Story Scene already exists. Be more creative')
-            }
-
+        addStoryScene: async (_, args, { models }): Promise<StoryScene> => {
             try {
-                await storySceneModel.create(args.storyScene, { raw: true })
-                const allStoryScenes = await storySceneModel.findAll()
+                const newDevice: StoryScene = await queryUtils.addItem<
+                    StoryScene
+                >({
+                    model: models.StoryScene,
+                    item: args.storyScene,
+                    checkField: ['description', args.storyScene.description],
+                })
 
-                return allStoryScenes
+                return newDevice
             } catch (err) {
                 throw new Error(err)
             }
@@ -45,59 +36,36 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<StoryScene> => {
-            const { StoryScene: storySceneModel } = models
-
             try {
-                storySceneModel.update(args, {
-                    where: {
-                        id: args.storyScene.id,
-                    },
-                })
+                const scene = await queryUtils.updateItem(
+                    models.StoryScene,
+                    args.storyScene,
+                    ['id', args.storyScene.id]
+                )
 
-                const prompt = await storySceneModel.findOne({
-                    where: {
-                        id: args.storyScene.id,
-                    },
-                    raw: true,
-                })
+                pubsub.publish(SCENE_UPDATED, { scene })
 
-                pubsub.publish(SCENE_UPDATED, { prompt })
-
-                return prompt
+                return scene
             } catch (err) {
                 throw new Error(err)
             }
         },
-        deleteWritingPrompt: async (
+        deleteStoryScene: async (
             _,
             args,
             { models, pubsub }
         ): Promise<string> => {
-            const { StoryScene: storySceneModel } = models
-
             try {
-                const prompt = await storySceneModel.findOne({
-                    where: {
-                        id: args.writingPromptId,
-                    },
-                    raw: true,
+                const deleted = await queryUtils.deleteItem({
+                    model: models.StoryScene,
+                    checkField: ['id', args.storySceneId],
+                    pubsub,
+                    constant: SCENE_DELETED,
                 })
 
-                if (!prompt) {
-                    throw new Error(
-                        "Story Scene doesn't exist or has been deleted"
-                    )
+                if (typeof deleted === 'string') {
+                    return deleted
                 }
-
-                storySceneModel.destroy({
-                    where: {
-                        id: args.writingPromptId,
-                    },
-                })
-
-                pubsub.publish(SCENE_DELETED, { prompt })
-
-                return `Story Scene (id: ${prompt.id}) successfully deleted`
             } catch (err) {
                 throw new Error(err)
             }
@@ -107,10 +75,10 @@ const resolver: Resolvers = {
             args,
             { models }
         ): Promise<StoryScene[]> => {
-            const { StoryScene: storySceneModel } = models
-
             try {
-                const allStoryScenesBefore = await storySceneModel.findAll()
+                const allStoryScenesBefore = await queryUtils.queryAll(
+                    models.StoryScene
+                )
 
                 let sceneTypeExists: boolean
 
@@ -126,15 +94,21 @@ const resolver: Resolvers = {
                     }
                 })
 
-                if (sceneTypeExists)
+                if (sceneTypeExists) {
                     throw new Error(
                         'A scene with this order number already exists'
                     )
+                }
 
-                await storySceneModel.bulkCreate(args.storyScenes)
-                const allStoryScenes = await storySceneModel.findAll()
+                const all = await queryUtils.bulkAddItem(
+                    models.StoryScene,
+                    args.storyScenes,
+                    ['description', 'description']
+                )
 
-                return allStoryScenes
+                if (Array.isArray(all)) {
+                    return all
+                }
             } catch (err) {
                 throw new Error(err)
             }

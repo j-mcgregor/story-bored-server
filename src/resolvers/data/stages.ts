@@ -1,4 +1,5 @@
 import { StageType, Resolvers } from '../../generated/graphql'
+import queryUtils from '../utils/queryUtils'
 
 const STAGE_UPDATED = 'STAGE_UPDATED'
 const STAGE_DELETED = 'STAGE_DELETED'
@@ -6,36 +7,24 @@ const STAGE_DELETED = 'STAGE_DELETED'
 const resolver: Resolvers = {
     Query: {
         storyStages: async (_, __, { models }): Promise<StageType[]> => {
-            const { StoryStage: storyStageModel } = models
             try {
-                const allStoryStages = await storyStageModel.findAll()
-
-                return allStoryStages
+                const all = await queryUtils.queryAll(models.StoryStage)
+                return all
             } catch (err) {
                 throw new Error(err)
             }
         },
     },
     Mutation: {
-        addStoryStage: async (_, args, { models }): Promise<StageType[]> => {
-            const { StoryStage: storyStageModel } = models
-
-            const stage = await storyStageModel.findOne({
-                where: {
-                    stage: args.storyStage.stage,
-                },
-                raw: true,
-            })
-
-            if (stage) {
-                throw new Error('Story Stage already exists. Be more creative')
-            }
-
+        addStoryStage: async (_, args, { models }): Promise<StageType> => {
             try {
-                await storyStageModel.create(args.storyStage, { raw: true })
-                const allStoryStages = await storyStageModel.findAll()
+                const newStage = await queryUtils.addItem<StageType>({
+                    model: models.StoryStage,
+                    item: args.storyStage,
+                    checkField: ['stage', args.storyStage.stage],
+                })
 
-                return allStoryStages
+                return newStage
             } catch (err) {
                 throw new Error(err)
             }
@@ -45,59 +34,36 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<StageType> => {
-            const { StoryStage: storyStageModel } = models
-
             try {
-                storyStageModel.update(args, {
-                    where: {
-                        id: args.storyStage.id,
-                    },
-                })
+                const stage = await queryUtils.updateItem(
+                    models.StoryStage,
+                    args.storyStage,
+                    ['id', args.storyStage.id]
+                )
 
-                const prompt = await storyStageModel.findOne({
-                    where: {
-                        id: args.storyStage.id,
-                    },
-                    raw: true,
-                })
+                pubsub.publish(STAGE_UPDATED, { stage })
 
-                pubsub.publish(STAGE_UPDATED, { prompt })
-
-                return prompt
+                return stage
             } catch (err) {
                 throw new Error(err)
             }
         },
-        deleteWritingPrompt: async (
+        deleteStoryStage: async (
             _,
             args,
             { models, pubsub }
         ): Promise<string> => {
-            const { StoryStage: storyStageModel } = models
-
             try {
-                const prompt = await storyStageModel.findOne({
-                    where: {
-                        id: args.writingPromptId,
-                    },
-                    raw: true,
+                const deleted = await queryUtils.deleteItem({
+                    model: models.StoryStage,
+                    checkField: ['id', args.storyStageId],
+                    pubsub,
+                    constant: STAGE_DELETED,
                 })
 
-                if (!prompt) {
-                    throw new Error(
-                        "Story Stage doesn't exist or has been deleted"
-                    )
+                if (typeof deleted === 'string') {
+                    return deleted
                 }
-
-                storyStageModel.destroy({
-                    where: {
-                        id: args.writingPromptId,
-                    },
-                })
-
-                pubsub.publish(STAGE_DELETED, { prompt })
-
-                return `Story Stage (id: ${prompt.id}) successfully deleted`
             } catch (err) {
                 throw new Error(err)
             }
@@ -107,30 +73,16 @@ const resolver: Resolvers = {
             args,
             { models }
         ): Promise<StageType[]> => {
-            const { StoryStage: storyStageModel } = models
-
             try {
-                const allStoryStagesBefore = await storyStageModel.findAll()
+                const all = await queryUtils.bulkAddItem(
+                    models.StoryStage,
+                    args.storyStages,
+                    ['stage', 'stage']
+                )
 
-                let stageTypeExists: boolean
-
-                allStoryStagesBefore.filter(stage => {
-                    if (stageTypeExists) return false
-
-                    if (
-                        !!args.storyStages.filter(f => f.stage === stage.stage)
-                            .length
-                    ) {
-                        stageTypeExists = true
-                    }
-                })
-
-                if (stageTypeExists) throw new Error('Stage already exists')
-
-                await storyStageModel.bulkCreate(args.storyStages)
-                const allStoryStages = await storyStageModel.findAll()
-
-                return allStoryStages
+                if (Array.isArray(all)) {
+                    return all
+                }
             } catch (err) {
                 throw new Error(err)
             }

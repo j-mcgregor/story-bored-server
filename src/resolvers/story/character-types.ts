@@ -1,4 +1,5 @@
 import { CharacterType, Resolvers } from '../../generated/graphql'
+import queryUtils from '../utils/queryUtils'
 
 const CHARACTER_TYPE_UPDATED = 'CHARACTER_TYPE_UPDATED'
 const CHARACTER_TYPE_DELETED = 'CHARACTER_TYPE_DELETED'
@@ -6,11 +7,9 @@ const CHARACTER_TYPE_DELETED = 'CHARACTER_TYPE_DELETED'
 const resolver: Resolvers = {
     Query: {
         characterType: async (_, __, { models }): Promise<CharacterType[]> => {
-            const { CharacterType: characterTypeModel } = models
             try {
-                const allCharacterTypes = await characterTypeModel.findAll()
-
-                return allCharacterTypes
+                const all = await queryUtils.queryAll(models.CharacterType)
+                return all
             } catch (err) {
                 throw new Error(err)
             }
@@ -21,29 +20,19 @@ const resolver: Resolvers = {
             _,
             args,
             { models }
-        ): Promise<CharacterType[]> => {
-            const { CharacterType: characterTypeModel } = models
-
-            const storyLengthName = await characterTypeModel.findOne({
-                where: {
-                    name: args.characterType.name,
-                },
-                raw: true,
-            })
-
-            if (storyLengthName) {
-                throw new Error(
-                    'Name is already in use. Please choose from ANTAGONIST, CONFIDANTE, DEUTERAGONIST, DYNAMIC_CHANGING, FOIL, LOVE_INTEREST, PROTAGONIST, ROUND, STATIC_UNCHANGING, SYMBOLIC, STOCK or TERTIARY'
-                )
-            }
-
+        ): Promise<CharacterType> => {
             try {
-                await characterTypeModel.create(args.characterType, {
-                    raw: true,
+                const newDevice: CharacterType = await queryUtils.addItem<
+                    CharacterType
+                >({
+                    model: models.CharacterType,
+                    item: args.characterType as CharacterType,
+                    checkField: ['name', args.characterType.name],
+                    errorMsg:
+                        'Name is already in use. Please choose from ANTAGONIST, CONFIDANTE, DEUTERAGONIST, DYNAMIC_CHANGING, FOIL, LOVE_INTEREST, PROTAGONIST, ROUND, STATIC_UNCHANGING, SYMBOLIC, STOCK or TERTIARY',
                 })
-                const allCharacterTypes = await characterTypeModel.findAll()
 
-                return allCharacterTypes
+                return newDevice
             } catch (err) {
                 throw new Error(err)
             }

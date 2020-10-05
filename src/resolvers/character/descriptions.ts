@@ -28,11 +28,13 @@ const resolver: Resolvers = {
             { models }
         ): Promise<CharacterDescriptionsType> => {
             try {
-                const newDescription = await queryUtils.addItem(
-                    models.CharacterDescription,
-                    { description },
-                    ['description', description]
-                )
+                const newDescription = await queryUtils.addItem<
+                    CharacterDescriptionsType
+                >({
+                    model: models.CharacterDescription,
+                    item: { description },
+                    checkField: ['description', description],
+                })
 
                 return newDescription
             } catch (err) {
@@ -44,21 +46,12 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<CharacterDescriptionsType> => {
-            const { CharacterDescription: descriptionModel } = models
-
             try {
-                descriptionModel.update(args, {
-                    where: {
-                        id: args.description.id,
-                    },
-                })
-
-                const description = await descriptionModel.findOne({
-                    where: {
-                        id: args.description.id,
-                    },
-                    raw: true,
-                })
+                const description = await queryUtils.updateItem(
+                    models.CharacterDescription,
+                    args.description,
+                    ['id', args.description.id]
+                )
 
                 pubsub.publish(DESCRIPTION_UPDATED, { description })
 
@@ -72,31 +65,19 @@ const resolver: Resolvers = {
             args,
             { models, pubsub }
         ): Promise<string> => {
-            const { CharacterDescription: descriptionModel } = models
-
             try {
-                const description = await descriptionModel.findOne({
-                    where: {
-                        id: args.description.id,
-                    },
-                    raw: true,
+                const deleted = await queryUtils.deleteItem({
+                    model: models.CharacterDescription,
+                    checkField: ['id', args.descriptionId],
+                    pubsub,
+                    constant: DESCRIPTION_DELETED,
                 })
 
-                if (!description) {
-                    throw new Error(
-                        "Character Description doesn't exist or has been deleted"
-                    )
+                if (typeof deleted === 'string') {
+                    return deleted
+                } else {
+                    throw deleted.message
                 }
-
-                descriptionModel.destroy({
-                    where: {
-                        id: args.description.id,
-                    },
-                })
-
-                pubsub.publish(DESCRIPTION_DELETED, { description })
-
-                return `Character Description (id: ${description.id}) successfully deleted`
             } catch (err) {
                 throw new Error(err)
             }
@@ -106,29 +87,16 @@ const resolver: Resolvers = {
             args,
             { models }
         ): Promise<CharacterDescriptionsType[]> => {
-            const { CharacterDescription: descriptionModel } = models
-
             try {
-                const all = await descriptionModel.findAll({
-                    attributes: ['description'],
-                })
+                const allDescriptions = await queryUtils.bulkAddItem(
+                    models.CharacterDescription,
+                    args.descriptions,
+                    ['description', 'description']
+                )
 
-                const existingDescriptions = [
-                    ...new Set(all.map(a => a.description)),
-                ]
-
-                const filteredArgs = args.descriptions
-                    .map(desc => {
-                        return !existingDescriptions.includes(desc.description)
-                            ? desc
-                            : null
-                    })
-                    .filter(f => f)
-
-                await descriptionModel.bulkCreate(filteredArgs)
-                const allDescriptions = await descriptionModel.findAll()
-
-                return allDescriptions
+                if (Array.isArray(allDescriptions)) {
+                    return allDescriptions
+                }
             } catch (err) {
                 throw new Error(err)
             }
