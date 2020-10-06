@@ -47,24 +47,29 @@ const bulkAddItem = async <T extends {}>(
 
     try {
         if (checkDuplicates?.length) {
-            const all = await model.findAll({
-                attributes: [checkDuplicates[0]],
-            })
+            const all = await model.findAll()
 
-            const existing = [...new Set(all.map(a => a[checkDuplicates[1]]))]
+            if (!!all.length) {
+                const existing = [
+                    ...new Set(all.map(a => a[checkDuplicates[1]])),
+                ]
 
-            newItems = items
-                .map(item => {
-                    return !existing.includes(item[checkDuplicates[1]])
-                        ? item
-                        : null
-                })
-                .filter(f => f)
+                newItems = items
+                    .map(item => {
+                        return !existing.includes(item[checkDuplicates[1]])
+                            ? item
+                            : null
+                    })
+                    .filter(f => f)
+            }
         }
 
-        await model.bulkCreate(newItems)
-
-        return queryAll(model)
+        try {
+            await model.bulkCreate(newItems)
+            return queryAll(model)
+        } catch (error) {
+            throw new Error(error)
+        }
     } catch (error) {
         return new Error(error)
     }

@@ -13,6 +13,7 @@ import Structure from './generate/structure'
 // CHARACTER
 import CharacterBodyPart from './character/bodyParts'
 import CharacterDescription from './character/descriptions'
+import CharacterHonorifics from './character/honorifics'
 
 export const allResolvers = [
     Notification,
@@ -32,6 +33,7 @@ export const allResolvers = [
     // CHARACTER
     CharacterBodyPart,
     CharacterDescription,
+    CharacterHonorifics,
 ]
 
 export default {
@@ -50,4 +52,5 @@ export default {
     // CHARACTER
     CharacterBodyPart,
     CharacterDescription,
+    CharacterHonorifics,
 }

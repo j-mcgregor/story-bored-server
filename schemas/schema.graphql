@@ -3,7 +3,7 @@
 # import Notification from "notification.graphql"
 # import Post from "post.graphql"
 # import StoryLength from "storyLength.graphql"
-# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType from "characterType.graphql"
+# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType from "characterType.graphql"
 # import GenreType from "genres.graphql"
 # import WritingPrompt, PlotDevice, StageType, StoryScene, StoryStageEnum from "data.graphql"
 # ---- COMPLEX ----
@@ -36,6 +36,7 @@ type Query {
     # -- descriptions
     characterDescriptions: [CharacterDescriptionsType]!
     # -- honorifics
+    characterHonorifics: [CharacterHonorificsType]!
     # -- first names: English
     # -- last names: English
     # -- first names: Norwegian
@@ -149,6 +150,15 @@ type Mutation {
     bulkAddCharacterDescriptions(
         descriptions: [CharacterDescriptionsInput]!
     ): [CharacterDescriptionsType]
+    # -- honorifics
+    addCharacterHonorifics(honorific: String): CharacterHonorificsType
+    updateCharacterHonorifics(
+        honorific: CharacterHonorificsInput
+    ): CharacterHonorificsType
+    deleteCharacterHonorifics(honorificId: String!): String
+    bulkAddCharacterHonorifics(
+        honorifics: [CharacterHonorificsInput]!
+    ): [CharacterHonorificsType]
 }
 
 type Subscription {

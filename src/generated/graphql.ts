@@ -68,6 +68,19 @@ export type CharacterDescriptionsType = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type CharacterHonorificsInput = {
+  id?: Maybe<Scalars['String']>;
+  honorific?: Maybe<Scalars['String']>;
+};
+
+export type CharacterHonorificsType = {
+  __typename?: 'CharacterHonorificsType';
+  honorific: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type CharacterInput = {
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<CharacterListEnum>;
@@ -87,8 +100,8 @@ export type CharacterType = {
   category?: Maybe<CharacterRoleEnum>;
   description?: Maybe<Scalars['String']>;
   examples: Array<Maybe<Scalars['String']>>;
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -179,6 +192,10 @@ export type Mutation = {
   updateCharacterDescriptions?: Maybe<CharacterDescriptionsType>;
   deleteCharacterDescriptions?: Maybe<Scalars['String']>;
   bulkAddCharacterDescriptions?: Maybe<Array<Maybe<CharacterDescriptionsType>>>;
+  addCharacterHonorifics?: Maybe<CharacterHonorificsType>;
+  updateCharacterHonorifics?: Maybe<CharacterHonorificsType>;
+  deleteCharacterHonorifics?: Maybe<Scalars['String']>;
+  bulkAddCharacterHonorifics?: Maybe<Array<Maybe<CharacterHonorificsType>>>;
 };
 
 
@@ -434,6 +451,26 @@ export type MutationBulkAddCharacterDescriptionsArgs = {
   descriptions: Array<Maybe<CharacterDescriptionsInput>>;
 };
 
+
+export type MutationAddCharacterHonorificsArgs = {
+  honorific?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateCharacterHonorificsArgs = {
+  honorific?: Maybe<CharacterHonorificsInput>;
+};
+
+
+export type MutationDeleteCharacterHonorificsArgs = {
+  honorificId: Scalars['String'];
+};
+
+
+export type MutationBulkAddCharacterHonorificsArgs = {
+  honorifics: Array<Maybe<CharacterHonorificsInput>>;
+};
+
 export type Notification = {
   __typename?: 'Notification';
   id: Scalars['ID'];
@@ -492,6 +529,7 @@ export type Query = {
   storyScenes: Array<Maybe<StoryScene>>;
   characterBodyParts: Array<Maybe<CharacterBodyPartsType>>;
   characterDescriptions: Array<Maybe<CharacterDescriptionsType>>;
+  characterHonorifics: Array<Maybe<CharacterHonorificsType>>;
 };
 
 
@@ -768,6 +806,7 @@ export type ResolversTypes = {
   StoryScene: ResolverTypeWrapper<StoryScene>;
   CharacterBodyPartsType: ResolverTypeWrapper<CharacterBodyPartsType>;
   CharacterDescriptionsType: ResolverTypeWrapper<CharacterDescriptionsType>;
+  CharacterHonorificsType: ResolverTypeWrapper<CharacterHonorificsType>;
   Mutation: ResolverTypeWrapper<{}>;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   SocialUserInput: SocialUserInput;
@@ -786,6 +825,7 @@ export type ResolversTypes = {
   SectionType: ResolverTypeWrapper<SectionType>;
   CharacterBodyPartsInput: CharacterBodyPartsInput;
   CharacterDescriptionsInput: CharacterDescriptionsInput;
+  CharacterHonorificsInput: CharacterHonorificsInput;
   Subscription: ResolverTypeWrapper<{}>;
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -821,6 +861,7 @@ export type ResolversParentTypes = {
   StoryScene: StoryScene;
   CharacterBodyPartsType: CharacterBodyPartsType;
   CharacterDescriptionsType: CharacterDescriptionsType;
+  CharacterHonorificsType: CharacterHonorificsType;
   Mutation: {};
   AuthPayload: AuthPayload;
   SocialUserInput: SocialUserInput;
@@ -839,6 +880,7 @@ export type ResolversParentTypes = {
   SectionType: SectionType;
   CharacterBodyPartsInput: CharacterBodyPartsInput;
   CharacterDescriptionsInput: CharacterDescriptionsInput;
+  CharacterHonorificsInput: CharacterHonorificsInput;
   Subscription: {};
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -870,14 +912,22 @@ export type CharacterDescriptionsTypeResolvers<ContextType = MyContext, ParentTy
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type CharacterHonorificsTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterHonorificsType'] = ResolversParentTypes['CharacterHonorificsType']> = {
+  honorific?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type CharacterTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterType'] = ResolversParentTypes['CharacterType']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['CharacterListEnum']>, ParentType, ContextType>;
   category?: Resolver<Maybe<ResolversTypes['CharacterRoleEnum']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   examples?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
@@ -954,6 +1004,10 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   updateCharacterDescriptions?: Resolver<Maybe<ResolversTypes['CharacterDescriptionsType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterDescriptionsArgs, never>>;
   deleteCharacterDescriptions?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterDescriptionsArgs, 'descriptionId'>>;
   bulkAddCharacterDescriptions?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterDescriptionsType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterDescriptionsArgs, 'descriptions'>>;
+  addCharacterHonorifics?: Resolver<Maybe<ResolversTypes['CharacterHonorificsType']>, ParentType, ContextType, RequireFields<MutationAddCharacterHonorificsArgs, never>>;
+  updateCharacterHonorifics?: Resolver<Maybe<ResolversTypes['CharacterHonorificsType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterHonorificsArgs, never>>;
+  deleteCharacterHonorifics?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterHonorificsArgs, 'honorificId'>>;
+  bulkAddCharacterHonorifics?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterHonorificsType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterHonorificsArgs, 'honorifics'>>;
 };
 
 export type NotificationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -1000,6 +1054,7 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   storyScenes?: Resolver<Array<Maybe<ResolversTypes['StoryScene']>>, ParentType, ContextType>;
   characterBodyParts?: Resolver<Array<Maybe<ResolversTypes['CharacterBodyPartsType']>>, ParentType, ContextType>;
   characterDescriptions?: Resolver<Array<Maybe<ResolversTypes['CharacterDescriptionsType']>>, ParentType, ContextType>;
+  characterHonorifics?: Resolver<Array<Maybe<ResolversTypes['CharacterHonorificsType']>>, ParentType, ContextType>;
 };
 
 export type SceneTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['SceneType'] = ResolversParentTypes['SceneType']> = {
@@ -1099,6 +1154,7 @@ export type Resolvers<ContextType = MyContext> = {
   ChapterType?: ChapterTypeResolvers<ContextType>;
   CharacterBodyPartsType?: CharacterBodyPartsTypeResolvers<ContextType>;
   CharacterDescriptionsType?: CharacterDescriptionsTypeResolvers<ContextType>;
+  CharacterHonorificsType?: CharacterHonorificsTypeResolvers<ContextType>;
   CharacterType?: CharacterTypeResolvers<ContextType>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
