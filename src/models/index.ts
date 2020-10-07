@@ -27,6 +27,10 @@ import CharacterLastName, {
     CharacterLastNameModelStatic,
 } from './character/LastName'
 import CharacterMood, { CharacterMoodModelStatic } from './character/Mood'
+import CharacterOccupation, {
+    CharacterOccupationModelStatic,
+} from './character/Occupation'
+import CharacterTitle, { CharacterTitleModelStatic } from './character/Title'
 
 export default {
     Notification,
@@ -46,6 +50,8 @@ export default {
     CharacterFirstName,
     CharacterLastName,
     CharacterMood,
+    CharacterOccupation,
+    CharacterTitle,
 }
 
 export interface ModelType {
@@ -66,4 +72,6 @@ export interface ModelType {
     CharacterFirstName: CharacterFirstNameModelStatic
     CharacterLastName: CharacterLastNameModelStatic
     CharacterMood: CharacterMoodModelStatic
+    CharacterOccupation: CharacterOccupationModelStatic
+    CharacterTitle: CharacterTitleModelStatic
 }

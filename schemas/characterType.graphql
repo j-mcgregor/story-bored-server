@@ -212,3 +212,43 @@ input CharacterMoodInput {
     id: String
     mood: String
 }
+
+# OCCUPATIONS
+
+type CharacterOccupationType {
+    occupation: String
+    language: String
+
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime
+}
+
+input CharacterOccupationInput {
+    id: String
+    occupation: String
+    language: String
+}
+# TITLES
+
+enum FIX_ENUM {
+    PRE
+    SUF
+}
+
+type CharacterTitleType {
+    title: String
+    language: String
+    fix: FIX_ENUM
+
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime
+}
+
+input CharacterTitleInput {
+    id: String
+    title: String
+    language: String
+    fix: FIX_ENUM
+}

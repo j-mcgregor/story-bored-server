@@ -3,7 +3,7 @@
 # import Notification from "notification.graphql"
 # import Post from "post.graphql"
 # import StoryLength from "storyLength.graphql"
-# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType, CharacterFirstNameType, CharacterLastNameType from "characterType.graphql"
+# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType, CharacterFirstNameType, CharacterLastNameType, CharacterOccupationType, CharacterTitleType from "characterType.graphql"
 # import GenreType from "genres.graphql"
 # import WritingPrompt, PlotDevice, StageType, StoryScene, StoryStageEnum from "data.graphql"
 # ---- COMPLEX ----
@@ -44,7 +44,9 @@ type Query {
     # -- moods
     characterMoods: [CharacterMoodType]!
     # -- occupations
-    # -- prefixes
+    characterOccupations: [CharacterOccupationType]!
+    # -- titles
+    characterTitles: [CharacterTitleType]!
 }
 
 type Mutation {
@@ -131,6 +133,7 @@ type Mutation {
         includeScenes: Boolean
     ): [SectionType]
     # CHARACTER GENERATION
+
     # -- body part
     addCharacterBodyParts(part: String): CharacterBodyPartsType
     updateCharacterBodyParts(
@@ -140,6 +143,7 @@ type Mutation {
     bulkAddCharacterBodyParts(
         parts: [CharacterBodyPartsInput]!
     ): [CharacterBodyPartsType]
+
     # -- description
     addCharacterDescriptions(description: String): CharacterDescriptionsType
     updateCharacterDescriptions(
@@ -149,6 +153,7 @@ type Mutation {
     bulkAddCharacterDescriptions(
         descriptions: [CharacterDescriptionsInput]!
     ): [CharacterDescriptionsType]
+
     # -- honorifics
     addCharacterHonorifics(honorific: String): CharacterHonorificsType
     updateCharacterHonorifics(
@@ -158,6 +163,7 @@ type Mutation {
     bulkAddCharacterHonorifics(
         honorifics: [CharacterHonorificsInput]!
     ): [CharacterHonorificsType]
+
     # -- first name
     addCharacterFirstName(
         firstName: CharacterFirstNameInput
@@ -169,6 +175,7 @@ type Mutation {
     bulkAddCharacterFirstNames(
         firstNames: [CharacterFirstNameInput]!
     ): [CharacterFirstNameType]
+
     # -- last name
     addCharacterLastName(
         lastName: CharacterLastNameInput
@@ -180,11 +187,30 @@ type Mutation {
     bulkAddCharacterLastNames(
         lastNames: [CharacterLastNameInput]!
     ): [CharacterLastNameType]
+
     # -- mood
     addCharacterMood(mood: CharacterMoodInput): CharacterMoodType
     updateCharacterMood(mood: CharacterMoodInput): CharacterMoodType
     deleteCharacterMood(moodId: String!): String
     bulkAddCharacterMoods(moods: [CharacterMoodInput]!): [CharacterMoodType]
+
+    # -- occupation
+    addCharacterOccupation(
+        occupation: CharacterOccupationInput
+    ): CharacterOccupationType
+    updateCharacterOccupation(
+        occupation: CharacterOccupationInput
+    ): CharacterOccupationType
+    deleteCharacterOccupation(occupationId: String!): String
+    bulkAddCharacterOccupations(
+        occupations: [CharacterOccupationInput]!
+    ): [CharacterOccupationType]
+
+    # -- title
+    addCharacterTitle(title: CharacterTitleInput): CharacterTitleType
+    updateCharacterTitle(title: CharacterTitleInput): CharacterTitleType
+    deleteCharacterTitle(titleId: String!): String
+    bulkAddCharacterTitles(titles: [CharacterTitleInput]!): [CharacterTitleType]
 }
 
 type Subscription {
