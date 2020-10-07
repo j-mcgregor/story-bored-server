@@ -166,26 +166,26 @@ type Mutation {
 
     # -- first name
     addCharacterFirstName(
-        firstName: CharacterFirstNameInput
+        first_name: CharacterFirstNameInput
     ): CharacterFirstNameType
     updateCharacterFirstName(
-        firstName: CharacterFirstNameInput
+        first_name: CharacterFirstNameInput
     ): CharacterFirstNameType
-    deleteCharacterFirstName(firstNameId: String!): String
+    deleteCharacterFirstName(first_nameId: String!): String
     bulkAddCharacterFirstNames(
-        firstNames: [CharacterFirstNameInput]!
+        first_names: [CharacterFirstNameInput]!
     ): [CharacterFirstNameType]
 
     # -- last name
     addCharacterLastName(
-        lastName: CharacterLastNameInput
+        last_name: CharacterLastNameInput
     ): CharacterLastNameType
     updateCharacterLastName(
-        lastName: CharacterLastNameInput
+        last_name: CharacterLastNameInput
     ): CharacterLastNameType
-    deleteCharacterLastName(lastNameId: String!): String
+    deleteCharacterLastName(last_nameId: String!): String
     bulkAddCharacterLastNames(
-        lastNames: [CharacterLastNameInput]!
+        last_names: [CharacterLastNameInput]!
     ): [CharacterLastNameType]
 
     # -- mood

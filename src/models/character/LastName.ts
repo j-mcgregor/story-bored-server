@@ -7,7 +7,7 @@ const { UUID, UUIDV1, STRING, ENUM } = DataTypes
 
 export class CharacterLastName extends Model {
     public id: string
-    public lastName: string
+    public last_name: string
     public origin: Origin
 
     public readonly createdAt: Date
@@ -23,7 +23,7 @@ CharacterLastName.init(
             allowNull: false,
             primaryKey: true,
         },
-        lastName: STRING,
+        last_name: STRING,
         origin: ENUM(Origin.SPANISH, Origin.NORWEIGIAN, Origin.GENERAL),
     },
     {

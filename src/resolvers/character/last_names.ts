@@ -26,14 +26,14 @@ const resolver: Resolvers = {
     Mutation: {
         addCharacterLastName: async (
             _,
-            { lastName },
+            { last_name },
             { models }
         ): Promise<CharacterLastNameType> => {
             try {
                 const name = await queryUtils.addItem<CharacterLastNameInput>({
                     model: models.CharacterLastName,
-                    item: lastName,
-                    checkField: ['lastName', lastName.lastName],
+                    item: last_name,
+                    checkField: ['last_name', last_name.last_name],
                 })
 
                 return name
@@ -43,19 +43,19 @@ const resolver: Resolvers = {
         },
         updateCharacterLastName: async (
             _,
-            { lastName },
+            { last_name },
             { models, pubsub }
         ): Promise<CharacterLastNameType> => {
             try {
-                const lastNameUpdated = await queryUtils.updateItem(
+                const last_nameUpdated = await queryUtils.updateItem(
                     models.CharacterDescription,
-                    { lastName },
-                    ['id', lastName.id]
+                    { last_name },
+                    ['id', last_name.id]
                 )
 
-                pubsub.publish(LAST_NAME_UPDATED, { lastNameUpdated })
+                pubsub.publish(LAST_NAME_UPDATED, { last_nameUpdated })
 
-                return lastNameUpdated
+                return last_nameUpdated
             } catch (err) {
                 throw new Error(err)
             }
@@ -68,7 +68,7 @@ const resolver: Resolvers = {
             try {
                 const deleted = await queryUtils.deleteItem({
                     model: models.CharacterLastName,
-                    checkField: ['id', args.lastNameId],
+                    checkField: ['id', args.last_nameId],
                     pubsub,
                     constant: LAST_NAME_DELETED,
                 })
@@ -84,14 +84,14 @@ const resolver: Resolvers = {
         },
         bulkAddCharacterLastNames: async (
             _,
-            { lastNames },
+            { last_names },
             { models }
         ): Promise<CharacterLastNameType[]> => {
             try {
                 await queryUtils.bulkAddItem(
                     models.CharacterLastName,
-                    lastNames,
-                    ['lastName', 'lastName']
+                    last_names,
+                    ['last_name', 'last_name']
                 )
 
                 const all = await queryUtils.queryAll(models.CharacterLastName)

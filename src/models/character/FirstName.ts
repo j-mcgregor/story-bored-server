@@ -17,7 +17,7 @@ enum GenderTraditionalEnum {
 
 export class CharacterFirstName extends Model {
     public id: string
-    public firstName: string
+    public first_name: string
     public origin: Origin
     public gender: GenderTraditionalEnum
 
@@ -34,7 +34,7 @@ CharacterFirstName.init(
             allowNull: false,
             primaryKey: true,
         },
-        firstName: STRING,
+        first_name: STRING,
         origin: ENUM(Origin.SPANISH, Origin.NORWEIGIAN, Origin.GENERAL),
         gender: ENUM(GenderTraditionalEnum.MALE, GenderTraditionalEnum.FEMALE),
     },

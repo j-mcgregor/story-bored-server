@@ -26,7 +26,7 @@ const resolver: Resolvers = {
     Mutation: {
         addCharacterFirstName: async (
             _,
-            { firstName },
+            { first_name },
             { models }
         ): Promise<CharacterFirstNameType> => {
             try {
@@ -34,8 +34,8 @@ const resolver: Resolvers = {
                     CharacterFirstNameInput
                 >({
                     model: models.CharacterFirstName,
-                    item: firstName,
-                    checkField: ['firstName', firstName.firstName],
+                    item: first_name,
+                    checkField: ['first_name', first_name.first_name],
                 })
 
                 return newDevice
@@ -45,19 +45,19 @@ const resolver: Resolvers = {
         },
         updateCharacterFirstName: async (
             _,
-            { firstName },
+            { first_name },
             { models, pubsub }
         ): Promise<CharacterFirstNameType> => {
             try {
-                const firstNameUpdated = await queryUtils.updateItem(
+                const first_nameUpdated = await queryUtils.updateItem(
                     models.CharacterDescription,
-                    { firstName },
-                    ['id', firstName.id]
+                    { first_name },
+                    ['id', first_name.id]
                 )
 
-                pubsub.publish(FIRST_NAME_UPDATED, { firstNameUpdated })
+                pubsub.publish(FIRST_NAME_UPDATED, { first_nameUpdated })
 
-                return firstNameUpdated
+                return first_nameUpdated
             } catch (err) {
                 throw new Error(err)
             }
@@ -70,7 +70,7 @@ const resolver: Resolvers = {
             try {
                 const deleted = await queryUtils.deleteItem({
                     model: models.CharacterFirstName,
-                    checkField: ['id', args.firstNameId],
+                    checkField: ['id', args.first_nameId],
                     pubsub,
                     constant: FIRST_NAME_DELETED,
                 })
@@ -86,14 +86,14 @@ const resolver: Resolvers = {
         },
         bulkAddCharacterFirstNames: async (
             _,
-            { firstNames },
+            { first_names },
             { models }
         ): Promise<CharacterFirstNameType[]> => {
             try {
                 await queryUtils.bulkAddItem(
                     models.CharacterFirstName,
-                    firstNames,
-                    ['firstName', 'firstName']
+                    first_names,
+                    ['first_name', 'first_name']
                 )
 
                 const all = await queryUtils.queryAll(models.CharacterFirstName)

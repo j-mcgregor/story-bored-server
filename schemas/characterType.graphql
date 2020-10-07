@@ -165,7 +165,7 @@ enum NAME_ORIGIN {
 }
 
 type CharacterFirstNameType {
-    firstName: String
+    first_name: String
     origin: NAME_ORIGIN
     gender: GenderModernEnum
 
@@ -176,7 +176,7 @@ type CharacterFirstNameType {
 
 input CharacterFirstNameInput {
     id: String
-    firstName: String!
+    first_name: String!
     origin: NAME_ORIGIN!
     gender: GenderModernEnum
 }
@@ -184,7 +184,7 @@ input CharacterFirstNameInput {
 # LAST NAMES
 
 type CharacterLastNameType {
-    lastName: String
+    last_name: String
     origin: NAME_ORIGIN
 
     createdAt: DateTime
@@ -194,7 +194,7 @@ type CharacterLastNameType {
 
 input CharacterLastNameInput {
     id: String
-    lastName: String!
+    last_name: String!
     origin: NAME_ORIGIN!
 }
 
