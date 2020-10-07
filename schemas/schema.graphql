@@ -3,7 +3,7 @@
 # import Notification from "notification.graphql"
 # import Post from "post.graphql"
 # import StoryLength from "storyLength.graphql"
-# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType from "characterType.graphql"
+# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType, CharacterFirstNameType, CharacterLastNameType from "characterType.graphql"
 # import GenreType from "genres.graphql"
 # import WritingPrompt, PlotDevice, StageType, StoryScene, StoryStageEnum from "data.graphql"
 # ---- COMPLEX ----
@@ -37,12 +37,10 @@ type Query {
     characterDescriptions: [CharacterDescriptionsType]!
     # -- honorifics
     characterHonorifics: [CharacterHonorificsType]!
-    # -- first names: English
-    # -- last names: English
-    # -- first names: Norwegian
-    # -- last names: Norwegian
-    # -- first names: Spanish
-    # -- last names: Spanish
+    # -- first names
+    characterFirstNames: [CharacterFirstNameType]!
+    # -- last names
+    characterLastNames: [CharacterLastNameType]!
     # -- moods
     # -- occupations
     # -- prefixes
@@ -159,6 +157,28 @@ type Mutation {
     bulkAddCharacterHonorifics(
         honorifics: [CharacterHonorificsInput]!
     ): [CharacterHonorificsType]
+    # -- first name
+    addCharacterFirstName(
+        firstName: CharacterFirstNameInput
+    ): CharacterFirstNameType
+    updateCharacterFirstName(
+        firstName: CharacterFirstNameInput
+    ): CharacterFirstNameType
+    deleteCharacterFirstName(firstNameId: String!): String
+    bulkAddCharacterFirstNames(
+        firstNames: [CharacterFirstNameInput]!
+    ): [CharacterFirstNameType]
+    # -- last name
+    addCharacterLastName(
+        lastName: CharacterLastNameInput
+    ): CharacterLastNameType
+    updateCharacterLastName(
+        lastName: CharacterLastNameInput
+    ): CharacterLastNameType
+    deleteCharacterLastName(lastNameId: String!): String
+    bulkAddCharacterLastNames(
+        lastNames: [CharacterLastNameInput]!
+    ): [CharacterLastNameType]
 }
 
 type Subscription {

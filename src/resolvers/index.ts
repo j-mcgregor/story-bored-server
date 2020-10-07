@@ -14,6 +14,8 @@ import Structure from './generate/structure'
 import CharacterBodyPart from './character/bodyParts'
 import CharacterDescription from './character/descriptions'
 import CharacterHonorifics from './character/honorifics'
+import CharacterFirstNames from './character/firstNames'
+import CharacterLastNames from './character/lastNames'
 
 export const allResolvers = [
     Notification,
@@ -34,6 +36,8 @@ export const allResolvers = [
     CharacterBodyPart,
     CharacterDescription,
     CharacterHonorifics,
+    CharacterFirstNames,
+    CharacterLastNames,
 ]
 
 export default {
@@ -53,4 +57,6 @@ export default {
     CharacterBodyPart,
     CharacterDescription,
     CharacterHonorifics,
+    CharacterFirstNames,
+    CharacterLastNames,
 }

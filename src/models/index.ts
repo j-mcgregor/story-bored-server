@@ -20,6 +20,12 @@ import CharacterDescription, {
 import CharacterHonorifics, {
     CharacterHonorificsModelStatic,
 } from './character/Honorifics'
+import CharacterFirstName, {
+    CharacterFirstNameModelStatic,
+} from './character/FirstName'
+import CharacterLastName, {
+    CharacterLastNameModelStatic,
+} from './character/LastName'
 
 export default {
     Notification,
@@ -36,6 +42,8 @@ export default {
     CharacterBodyPart,
     CharacterDescription,
     CharacterHonorifics,
+    CharacterFirstName,
+    CharacterLastName,
 }
 
 export interface ModelType {
@@ -53,4 +61,6 @@ export interface ModelType {
     CharacterBodyPart: CharacterBodyPartModelStatic
     CharacterDescription: CharacterDescriptionModelStatic
     CharacterHonorifics: CharacterHonorificsModelStatic
+    CharacterFirstName: CharacterFirstNameModelStatic
+    CharacterLastName: CharacterLastNameModelStatic
 }

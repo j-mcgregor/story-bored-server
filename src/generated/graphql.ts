@@ -68,6 +68,23 @@ export type CharacterDescriptionsType = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type CharacterFirstNameInput = {
+  id?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
+  origin: Name_Origin;
+  gender?: Maybe<GenderModernEnum>;
+};
+
+export type CharacterFirstNameType = {
+  __typename?: 'CharacterFirstNameType';
+  firstName?: Maybe<Scalars['String']>;
+  origin?: Maybe<Name_Origin>;
+  gender?: Maybe<GenderModernEnum>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type CharacterHonorificsInput = {
   id?: Maybe<Scalars['String']>;
   honorific?: Maybe<Scalars['String']>;
@@ -87,6 +104,21 @@ export type CharacterInput = {
   category?: Maybe<CharacterRoleEnum>;
   description?: Maybe<Scalars['String']>;
   examples: Array<Maybe<Scalars['String']>>;
+};
+
+export type CharacterLastNameInput = {
+  id?: Maybe<Scalars['String']>;
+  lastName: Scalars['String'];
+  origin: Name_Origin;
+};
+
+export type CharacterLastNameType = {
+  __typename?: 'CharacterLastNameType';
+  lastName?: Maybe<Scalars['String']>;
+  origin?: Maybe<Name_Origin>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export { CharacterListEnum };
@@ -110,6 +142,61 @@ export type CharacterType = {
 export enum Gender {
   Male = 'MALE',
   Female = 'FEMALE'
+}
+
+export enum GenderModernEnum {
+  Agender = 'AGENDER',
+  Androgyne = 'ANDROGYNE',
+  Androgynous = 'ANDROGYNOUS',
+  Bigender = 'BIGENDER',
+  Cis = 'CIS',
+  Cisgender = 'CISGENDER',
+  CisFemale = 'CIS_FEMALE',
+  CisMale = 'CIS_MALE',
+  CisMan = 'CIS_MAN',
+  CisWoman = 'CIS_WOMAN',
+  CisgenderFemale = 'CISGENDER_FEMALE',
+  CisgenderMale = 'CISGENDER_MALE',
+  CisgenderMan = 'CISGENDER_MAN',
+  CisgenderWoman = 'CISGENDER_WOMAN',
+  Female = 'FEMALE',
+  FemaleToMale = 'FEMALE_TO_MALE',
+  Ftm = 'FTM',
+  GenderFluid = 'GENDER_FLUID',
+  GenderNonconforming = 'GENDER_NONCONFORMING',
+  GenderQuestioning = 'GENDER_QUESTIONING',
+  GenderVariant = 'GENDER_VARIANT',
+  Genderqueer = 'GENDERQUEER',
+  Intersex = 'INTERSEX',
+  Male = 'MALE',
+  MaleToFemale = 'MALE_TO_FEMALE',
+  Mtf = 'MTF',
+  Neither = 'NEITHER',
+  Neutrois = 'NEUTROIS',
+  NonBinary = 'NON_BINARY',
+  Other = 'OTHER',
+  Pangender = 'PANGENDER',
+  Trans = 'TRANS',
+  TransFemale = 'TRANS_FEMALE',
+  TransMale = 'TRANS_MALE',
+  TransMan = 'TRANS_MAN',
+  TransPerson = 'TRANS_PERSON',
+  TransWoman = 'TRANS_WOMAN',
+  Transfeminine = 'TRANSFEMININE',
+  Transgender = 'TRANSGENDER',
+  TransgenderFemale = 'TRANSGENDER_FEMALE',
+  TransgenderMale = 'TRANSGENDER_MALE',
+  TransgenderMan = 'TRANSGENDER_MAN',
+  TransgenderPerson = 'TRANSGENDER_PERSON',
+  TransgenderWoman = 'TRANSGENDER_WOMAN',
+  Transmasculine = 'TRANSMASCULINE',
+  Transsexual = 'TRANSSEXUAL',
+  TranssexualFemale = 'TRANSSEXUAL_FEMALE',
+  TranssexualMale = 'TRANSSEXUAL_MALE',
+  TranssexualMan = 'TRANSSEXUAL_MAN',
+  TranssexualPerson = 'TRANSSEXUAL_PERSON',
+  TranssexualWoman = 'TRANSSEXUAL_WOMAN',
+  TwoSpirit = 'TWO_SPIRIT'
 }
 
 export { GenreListType };
@@ -196,6 +283,14 @@ export type Mutation = {
   updateCharacterHonorifics?: Maybe<CharacterHonorificsType>;
   deleteCharacterHonorifics?: Maybe<Scalars['String']>;
   bulkAddCharacterHonorifics?: Maybe<Array<Maybe<CharacterHonorificsType>>>;
+  addCharacterFirstName?: Maybe<CharacterFirstNameType>;
+  updateCharacterFirstName?: Maybe<CharacterFirstNameType>;
+  deleteCharacterFirstName?: Maybe<Scalars['String']>;
+  bulkAddCharacterFirstNames?: Maybe<Array<Maybe<CharacterFirstNameType>>>;
+  addCharacterLastName?: Maybe<CharacterLastNameType>;
+  updateCharacterLastName?: Maybe<CharacterLastNameType>;
+  deleteCharacterLastName?: Maybe<Scalars['String']>;
+  bulkAddCharacterLastNames?: Maybe<Array<Maybe<CharacterLastNameType>>>;
 };
 
 
@@ -471,6 +566,52 @@ export type MutationBulkAddCharacterHonorificsArgs = {
   honorifics: Array<Maybe<CharacterHonorificsInput>>;
 };
 
+
+export type MutationAddCharacterFirstNameArgs = {
+  firstName?: Maybe<CharacterFirstNameInput>;
+};
+
+
+export type MutationUpdateCharacterFirstNameArgs = {
+  firstName?: Maybe<CharacterFirstNameInput>;
+};
+
+
+export type MutationDeleteCharacterFirstNameArgs = {
+  firstNameId: Scalars['String'];
+};
+
+
+export type MutationBulkAddCharacterFirstNamesArgs = {
+  firstNames: Array<Maybe<CharacterFirstNameInput>>;
+};
+
+
+export type MutationAddCharacterLastNameArgs = {
+  lastName?: Maybe<CharacterLastNameInput>;
+};
+
+
+export type MutationUpdateCharacterLastNameArgs = {
+  lastName?: Maybe<CharacterLastNameInput>;
+};
+
+
+export type MutationDeleteCharacterLastNameArgs = {
+  lastNameId: Scalars['String'];
+};
+
+
+export type MutationBulkAddCharacterLastNamesArgs = {
+  lastNames: Array<Maybe<CharacterLastNameInput>>;
+};
+
+export enum Name_Origin {
+  Spanish = 'SPANISH',
+  Norweigian = 'NORWEIGIAN',
+  General = 'GENERAL'
+}
+
 export type Notification = {
   __typename?: 'Notification';
   id: Scalars['ID'];
@@ -530,6 +671,8 @@ export type Query = {
   characterBodyParts: Array<Maybe<CharacterBodyPartsType>>;
   characterDescriptions: Array<Maybe<CharacterDescriptionsType>>;
   characterHonorifics: Array<Maybe<CharacterHonorificsType>>;
+  characterFirstNames: Array<Maybe<CharacterFirstNameType>>;
+  characterLastNames: Array<Maybe<CharacterLastNameType>>;
 };
 
 
@@ -807,6 +950,10 @@ export type ResolversTypes = {
   CharacterBodyPartsType: ResolverTypeWrapper<CharacterBodyPartsType>;
   CharacterDescriptionsType: ResolverTypeWrapper<CharacterDescriptionsType>;
   CharacterHonorificsType: ResolverTypeWrapper<CharacterHonorificsType>;
+  CharacterFirstNameType: ResolverTypeWrapper<CharacterFirstNameType>;
+  NAME_ORIGIN: Name_Origin;
+  GenderModernEnum: GenderModernEnum;
+  CharacterLastNameType: ResolverTypeWrapper<CharacterLastNameType>;
   Mutation: ResolverTypeWrapper<{}>;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   SocialUserInput: SocialUserInput;
@@ -826,6 +973,8 @@ export type ResolversTypes = {
   CharacterBodyPartsInput: CharacterBodyPartsInput;
   CharacterDescriptionsInput: CharacterDescriptionsInput;
   CharacterHonorificsInput: CharacterHonorificsInput;
+  CharacterFirstNameInput: CharacterFirstNameInput;
+  CharacterLastNameInput: CharacterLastNameInput;
   Subscription: ResolverTypeWrapper<{}>;
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -862,6 +1011,10 @@ export type ResolversParentTypes = {
   CharacterBodyPartsType: CharacterBodyPartsType;
   CharacterDescriptionsType: CharacterDescriptionsType;
   CharacterHonorificsType: CharacterHonorificsType;
+  CharacterFirstNameType: CharacterFirstNameType;
+  NAME_ORIGIN: Name_Origin;
+  GenderModernEnum: GenderModernEnum;
+  CharacterLastNameType: CharacterLastNameType;
   Mutation: {};
   AuthPayload: AuthPayload;
   SocialUserInput: SocialUserInput;
@@ -881,6 +1034,8 @@ export type ResolversParentTypes = {
   CharacterBodyPartsInput: CharacterBodyPartsInput;
   CharacterDescriptionsInput: CharacterDescriptionsInput;
   CharacterHonorificsInput: CharacterHonorificsInput;
+  CharacterFirstNameInput: CharacterFirstNameInput;
+  CharacterLastNameInput: CharacterLastNameInput;
   Subscription: {};
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -912,8 +1067,27 @@ export type CharacterDescriptionsTypeResolvers<ContextType = MyContext, ParentTy
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type CharacterFirstNameTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterFirstNameType'] = ResolversParentTypes['CharacterFirstNameType']> = {
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  origin?: Resolver<Maybe<ResolversTypes['NAME_ORIGIN']>, ParentType, ContextType>;
+  gender?: Resolver<Maybe<ResolversTypes['GenderModernEnum']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type CharacterHonorificsTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterHonorificsType'] = ResolversParentTypes['CharacterHonorificsType']> = {
   honorific?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type CharacterLastNameTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterLastNameType'] = ResolversParentTypes['CharacterLastNameType']> = {
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  origin?: Resolver<Maybe<ResolversTypes['NAME_ORIGIN']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -1008,6 +1182,14 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   updateCharacterHonorifics?: Resolver<Maybe<ResolversTypes['CharacterHonorificsType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterHonorificsArgs, never>>;
   deleteCharacterHonorifics?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterHonorificsArgs, 'honorificId'>>;
   bulkAddCharacterHonorifics?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterHonorificsType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterHonorificsArgs, 'honorifics'>>;
+  addCharacterFirstName?: Resolver<Maybe<ResolversTypes['CharacterFirstNameType']>, ParentType, ContextType, RequireFields<MutationAddCharacterFirstNameArgs, never>>;
+  updateCharacterFirstName?: Resolver<Maybe<ResolversTypes['CharacterFirstNameType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterFirstNameArgs, never>>;
+  deleteCharacterFirstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterFirstNameArgs, 'firstNameId'>>;
+  bulkAddCharacterFirstNames?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterFirstNameType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterFirstNamesArgs, 'firstNames'>>;
+  addCharacterLastName?: Resolver<Maybe<ResolversTypes['CharacterLastNameType']>, ParentType, ContextType, RequireFields<MutationAddCharacterLastNameArgs, never>>;
+  updateCharacterLastName?: Resolver<Maybe<ResolversTypes['CharacterLastNameType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterLastNameArgs, never>>;
+  deleteCharacterLastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterLastNameArgs, 'lastNameId'>>;
+  bulkAddCharacterLastNames?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterLastNameType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterLastNamesArgs, 'lastNames'>>;
 };
 
 export type NotificationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -1055,6 +1237,8 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   characterBodyParts?: Resolver<Array<Maybe<ResolversTypes['CharacterBodyPartsType']>>, ParentType, ContextType>;
   characterDescriptions?: Resolver<Array<Maybe<ResolversTypes['CharacterDescriptionsType']>>, ParentType, ContextType>;
   characterHonorifics?: Resolver<Array<Maybe<ResolversTypes['CharacterHonorificsType']>>, ParentType, ContextType>;
+  characterFirstNames?: Resolver<Array<Maybe<ResolversTypes['CharacterFirstNameType']>>, ParentType, ContextType>;
+  characterLastNames?: Resolver<Array<Maybe<ResolversTypes['CharacterLastNameType']>>, ParentType, ContextType>;
 };
 
 export type SceneTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['SceneType'] = ResolversParentTypes['SceneType']> = {
@@ -1154,7 +1338,9 @@ export type Resolvers<ContextType = MyContext> = {
   ChapterType?: ChapterTypeResolvers<ContextType>;
   CharacterBodyPartsType?: CharacterBodyPartsTypeResolvers<ContextType>;
   CharacterDescriptionsType?: CharacterDescriptionsTypeResolvers<ContextType>;
+  CharacterFirstNameType?: CharacterFirstNameTypeResolvers<ContextType>;
   CharacterHonorificsType?: CharacterHonorificsTypeResolvers<ContextType>;
+  CharacterLastNameType?: CharacterLastNameTypeResolvers<ContextType>;
   CharacterType?: CharacterTypeResolvers<ContextType>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;

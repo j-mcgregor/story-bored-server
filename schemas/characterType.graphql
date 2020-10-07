@@ -61,6 +61,7 @@ enum GenderModernEnum {
     CISGENDER_MALE
     CISGENDER_MAN
     CISGENDER_WOMAN
+    FEMALE
     FEMALE_TO_MALE
     FTM
     GENDER_FLUID
@@ -69,6 +70,7 @@ enum GenderModernEnum {
     GENDER_VARIANT
     GENDERQUEER
     INTERSEX
+    MALE
     MALE_TO_FEMALE
     MTF
     NEITHER
@@ -152,4 +154,44 @@ type CharacterHonorificsType {
 input CharacterHonorificsInput {
     id: String
     honorific: String
+}
+
+# FIRST NAMES
+
+enum NAME_ORIGIN {
+    SPANISH
+    NORWEIGIAN
+    GENERAL
+}
+
+type CharacterFirstNameType {
+    firstName: String
+    origin: NAME_ORIGIN
+    gender: GenderModernEnum
+
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime
+}
+
+input CharacterFirstNameInput {
+    id: String
+    firstName: String!
+    origin: NAME_ORIGIN!
+    gender: GenderModernEnum
+}
+
+type CharacterLastNameType {
+    lastName: String
+    origin: NAME_ORIGIN
+
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime
+}
+
+input CharacterLastNameInput {
+    id: String
+    lastName: String!
+    origin: NAME_ORIGIN!
 }
