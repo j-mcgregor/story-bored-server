@@ -16,6 +16,7 @@ import CharacterDescription from './character/descriptions'
 import CharacterHonorifics from './character/honorifics'
 import CharacterFirstNames from './character/firstNames'
 import CharacterLastNames from './character/lastNames'
+import CharacterMoods from './character/moods'
 
 export const allResolvers = [
     Notification,
@@ -38,6 +39,7 @@ export const allResolvers = [
     CharacterHonorifics,
     CharacterFirstNames,
     CharacterLastNames,
+    CharacterMoods,
 ]
 
 export default {
@@ -59,4 +61,5 @@ export default {
     CharacterHonorifics,
     CharacterFirstNames,
     CharacterLastNames,
+    CharacterMoods,
 }

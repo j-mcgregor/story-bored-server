@@ -26,6 +26,7 @@ import CharacterFirstName, {
 import CharacterLastName, {
     CharacterLastNameModelStatic,
 } from './character/LastName'
+import CharacterMood, { CharacterMoodModelStatic } from './character/Mood'
 
 export default {
     Notification,
@@ -44,6 +45,7 @@ export default {
     CharacterHonorifics,
     CharacterFirstName,
     CharacterLastName,
+    CharacterMood,
 }
 
 export interface ModelType {
@@ -63,4 +65,5 @@ export interface ModelType {
     CharacterHonorifics: CharacterHonorificsModelStatic
     CharacterFirstName: CharacterFirstNameModelStatic
     CharacterLastName: CharacterLastNameModelStatic
+    CharacterMood: CharacterMoodModelStatic
 }

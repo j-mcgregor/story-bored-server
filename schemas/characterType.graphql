@@ -181,6 +181,8 @@ input CharacterFirstNameInput {
     gender: GenderModernEnum
 }
 
+# LAST NAMES
+
 type CharacterLastNameType {
     lastName: String
     origin: NAME_ORIGIN
@@ -194,4 +196,19 @@ input CharacterLastNameInput {
     id: String
     lastName: String!
     origin: NAME_ORIGIN!
+}
+
+# MOODS
+
+type CharacterMoodType {
+    mood: String
+
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime
+}
+
+input CharacterMoodInput {
+    id: String
+    mood: String
 }
