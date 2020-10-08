@@ -1,7 +1,4 @@
-import {
-    StructureController,
-    SectionType,
-} from '../../controllers/generators/structure'
+import { StructureController, SectionType } from '../../controllers/structure'
 import { Resolvers } from '../../generated/graphql'
 
 const resolver: Resolvers = {

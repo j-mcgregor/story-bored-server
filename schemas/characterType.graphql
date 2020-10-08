@@ -37,7 +37,7 @@ input CharacterInput {
     name: CharacterListEnum
     category: CharacterRoleEnum
     description: String
-    examples: [String]!
+    examples: [String]
 }
 
 # DESCRIPTION
@@ -251,4 +251,33 @@ input CharacterTitleInput {
     title: String
     language: String
     fix: FIX_ENUM
+}
+
+# FULL CHARACTER
+
+type GenerateCharacter {
+    title: String
+    first_name: String
+    last_name: String
+    character_type: CharacterType
+    descriptions: [String]
+    moods: [String]
+    occupations: [String]
+    Honorifics: String
+}
+
+input GenerateCharacterInput {
+    id: String
+    title: FIX_ENUM
+    first_name: String
+    last_name: String
+    character_type: GetCharacterType
+    descriptions: Int
+    moods: Int
+    occupations: Int
+    honorifics: Boolean
+}
+
+input GetCharacterType {
+    type: CharacterListEnum
 }

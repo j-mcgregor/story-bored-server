@@ -10,6 +10,7 @@ import StoryScenes from './data/storyScenes'
 // GENRATE
 import Head from './generate/head'
 import Structure from './generate/structure'
+import Character from './generate/character'
 // CHARACTER
 import CharacterBodyPart from './character/bodyParts'
 import CharacterDescription from './character/descriptions'
@@ -44,6 +45,7 @@ export const allResolvers = [
     CharacterMoods,
     CharacterOccupations,
     CharacterTitles,
+    Character,
 ]
 
 export default {
@@ -68,4 +70,5 @@ export default {
     CharacterMoods,
     CharacterOccupations,
     CharacterTitles,
+    Character,
 }

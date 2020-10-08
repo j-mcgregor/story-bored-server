@@ -1,7 +1,7 @@
 import _ from 'lodash'
-import { ChapterType, SceneType, StageType } from '../../generated/graphql'
-import { StoryStageEnum } from '../../models/data/Stage'
-import { StoryLength, StoryLengthType } from '../../models/story/Length'
+import { ChapterType, SceneType, StageType } from '../generated/graphql'
+import { StoryStageEnum } from '../models/data/Stage'
+import { StoryLength } from '../models/story/Length'
 
 export enum StructureTypeEnum {
     Traditional = 'TRADITIONAL',
@@ -51,26 +51,16 @@ export class StructureController {
     public section3Scenes = [StoryStageEnum.POWER, StoryStageEnum.RESOLUTION]
 
     public filterScenesByStage = (arr: SceneType[]) => {
-        const section1 = arr.filter(a =>
-            this.section1Scenes.includes(a.defaultStage)
-        )
-        const section2 = arr.filter(a =>
-            this.section2Scenes.includes(a.defaultStage)
-        )
-        const section3 = arr.filter(a =>
-            this.section3Scenes.includes(a.defaultStage)
-        )
+        const section1 = arr.filter(a => this.section1Scenes.includes(a.defaultStage))
+        const section2 = arr.filter(a => this.section2Scenes.includes(a.defaultStage))
+        const section3 = arr.filter(a => this.section3Scenes.includes(a.defaultStage))
 
         return [section1, section2, section3]
     }
 
-    public divider = (arr1: any[], arr2: any[]): number =>
-        Math.floor(arr1.length / arr2.length)
+    public divider = (arr1: any[], arr2: any[]): number => Math.floor(arr1.length / arr2.length)
 
-    protected createNestedChapters = (
-        arr1: ChapterType[],
-        arr2: StageType[]
-    ): StageType[] => {
+    protected createNestedChapters = (arr1: ChapterType[], arr2: StageType[]): StageType[] => {
         const div = this.divider(arr1, arr2)
         const splitChpt = _.chunk(arr1, div)
 
@@ -119,10 +109,7 @@ export class StructureController {
         }
     }
 
-    public generateStages = (
-        sections: SectionType[],
-        stagesList: StageType[]
-    ) => {
+    public generateStages = (sections: SectionType[], stagesList: StageType[]) => {
         return sections.map(section => {
             switch (section.name) {
                 case SectionLocationEnum.Beginning:
@@ -133,9 +120,7 @@ export class StructureController {
                 case SectionLocationEnum.Middle:
                     return {
                         ...section,
-                        stages: stagesList.filter(
-                            s => s.storyOrder > 2 && s.storyOrder <= 6
-                        ),
+                        stages: stagesList.filter(s => s.storyOrder > 2 && s.storyOrder <= 6),
                     }
                 case SectionLocationEnum.End:
                     return {
@@ -162,29 +147,20 @@ export class StructureController {
                 ? Math.floor(numberOfChapters / SECTIONS_LENGTH)
                 : SECTIONS_LENGTH
 
-        const chapters: ChapterType[] = Array.from(
-            Array(numberOfChapters),
-            (x, i) => ({
-                chapter: i + 1,
-                avMinWordsPerChapter: minWords,
-                avMaxWordsPerChapter: maxWords,
-            })
-        )
+        const chapters: ChapterType[] = Array.from(Array(numberOfChapters), (x, i) => ({
+            chapter: i + 1,
+            avMinWordsPerChapter: minWords,
+            avMaxWordsPerChapter: maxWords,
+        }))
 
-        const sectionChapters: ChapterType[][] = _.chunk(
-            chapters,
-            avChaptersPerSection
-        )
+        const sectionChapters: ChapterType[][] = _.chunk(chapters, avChaptersPerSection)
         const SECTION_CHAPTER_LENGTH = sectionChapters.length
 
         const newSections = sections.map(section => {
             switch (section.name) {
                 case SectionLocationEnum.Beginning:
                     if (nested) {
-                        const stages = this.createNestedChapters(
-                            sectionChapters[0],
-                            section.stages
-                        )
+                        const stages = this.createNestedChapters(sectionChapters[0], section.stages)
 
                         return { ...section, stages }
                     } else {
@@ -193,24 +169,16 @@ export class StructureController {
                 case SectionLocationEnum.End:
                     const last: number = SECTION_CHAPTER_LENGTH - 1
                     if (nested) {
-                        const stages = this.createNestedChapters(
-                            sectionChapters[last],
-                            section.stages
-                        )
+                        const stages = this.createNestedChapters(sectionChapters[last], section.stages)
 
                         return { ...section, stages }
                     } else {
                         return { ...section, chapters: sectionChapters[last] }
                     }
                 case SectionLocationEnum.Middle:
-                    const midChpts = _.flattenDeep(
-                        sectionChapters.slice(1, SECTION_CHAPTER_LENGTH)
-                    )
+                    const midChpts = _.flattenDeep(sectionChapters.slice(1, SECTION_CHAPTER_LENGTH))
                     if (nested) {
-                        const stages = this.createNestedChapters(
-                            midChpts,
-                            section.stages
-                        )
+                        const stages = this.createNestedChapters(midChpts, section.stages)
 
                         return { ...section, stages }
                     } else {
@@ -234,27 +202,16 @@ export class StructureController {
         }
     }
 
-    protected mapStagesToSection = (
-        section: SectionType,
-        sectionScenes: SceneType[]
-    ) => {
+    protected mapStagesToSection = (section: SectionType, sectionScenes: SceneType[]) => {
         return {
             ...section,
-            stages: section.stages.map(stage =>
-                this.mapScenesToStages(stage, sectionScenes)
-            ),
+            stages: section.stages.map(stage => this.mapScenesToStages(stage, sectionScenes)),
         }
     }
 
-    public generateScenes = (
-        sections: SectionType[],
-        nested: boolean,
-        scenes: SceneType[]
-    ) => {
+    public generateScenes = (sections: SectionType[], nested: boolean, scenes: SceneType[]) => {
         return sections.map(section => {
-            const [section1, section2, section3] = this.filterScenesByStage([
-                ...scenes,
-            ])
+            const [section1, section2, section3] = this.filterScenesByStage([...scenes])
 
             switch (section.name) {
                 case SectionLocationEnum.Beginning:
