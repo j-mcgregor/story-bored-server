@@ -1,5 +1,6 @@
 import { CharacterController } from '../../controllers/character'
-import { CharacterType, Resolvers } from '../../generated/graphql'
+import { FeatureController } from '../../controllers/feature'
+import { CharacterType, GenerateFeaturesType, Resolvers } from '../../generated/graphql'
 
 export interface Character {
     title?: string
@@ -35,6 +36,17 @@ const resolver: Resolvers = {
                 if (input.honorifics) await controller.getHonorific()
 
                 return controller.character
+            } catch (e) {
+                throw new Error(e)
+            }
+        },
+        generateFeatures: async (_, { input, options }): Promise<GenerateFeaturesType> => {
+            const controller = new FeatureController(input)
+
+            try {
+                await controller.getFeatures(options)
+
+                return controller.features
             } catch (e) {
                 throw new Error(e)
             }

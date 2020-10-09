@@ -229,6 +229,7 @@ input CharacterOccupationInput {
     occupation: String
     language: String
 }
+
 # TITLES
 
 enum FIX_ENUM {
@@ -251,6 +252,121 @@ input CharacterTitleInput {
     title: String
     language: String
     fix: FIX_ENUM
+}
+
+# FEATURES
+
+enum Feature {
+    AGE
+    BUILD
+    EYEBROWS
+    EYE_COLOR
+    EYE_SHAPE
+    FACIAL_SHAPE
+    FACIAL_HAIR
+    FACIAL_FEATURES
+    GENERAL_APPEARANCE
+    HAIR_COLOR
+    HAIR_COLOR_ALTERNATIVES
+    HAIR_LENGTH
+    HAIR_TYPES
+    HANDS
+    HEIGHT
+    MOUTH_LIPS
+    NOSE
+    PERSONALITY_TRAITS
+    SKIN_GENERAL
+    SKIN_TONE
+}
+
+type CharacterFeatureType {
+    feature: Feature
+    value: String
+    category: String
+
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime
+}
+
+input CharacterFeatureInput {
+    id: String
+    feature: Feature
+    value: String
+    category: String
+}
+
+type DynamicFeature {
+    key: String
+}
+
+type GenerateFeaturesType {
+    AGE: CharacterFeatureType
+    BUILD: CharacterFeatureType
+    EYEBROWS: CharacterFeatureType
+    EYE_COLOR: CharacterFeatureType
+    EYE_SHAPE: CharacterFeatureType
+    FACIAL_SHAPE: CharacterFeatureType
+    FACIAL_HAIR: CharacterFeatureType
+    FACIAL_FEATURES: CharacterFeatureType
+    GENERAL_APPEARANCE: CharacterFeatureType
+    HAIR_COLOR: CharacterFeatureType
+    HAIR_COLOR_ALTERNATIVES: CharacterFeatureType
+    HAIR_LENGTH: CharacterFeatureType
+    HAIR_TYPES: CharacterFeatureType
+    HANDS: CharacterFeatureType
+    HEIGHT: CharacterFeatureType
+    MOUTH_LIPS: CharacterFeatureType
+    NOSE: CharacterFeatureType
+    PERSONALITY_TRAITS: CharacterFeatureType
+    SKIN_GENERAL: CharacterFeatureType
+    SKIN_TONE: CharacterFeatureType
+}
+
+input GenerateFeaturesInput {
+    AGE: Boolean
+    BUILD: Boolean
+    EYEBROWS: Boolean
+    EYE_COLOR: Boolean
+    EYE_SHAPE: Boolean
+    FACIAL_SHAPE: Boolean
+    FACIAL_HAIR: Boolean
+    FACIAL_FEATURES: Boolean
+    GENERAL_APPEARANCE: Boolean
+    HAIR_COLOR: Boolean
+    HAIR_COLOR_ALTERNATIVES: Boolean
+    HAIR_LENGTH: Boolean
+    HAIR_TYPES: Boolean
+    HANDS: Boolean
+    HEIGHT: Boolean
+    MOUTH_LIPS: Boolean
+    NOSE: Boolean
+    PERSONALITY_TRAITS: Boolean
+    SKIN_GENERAL: Boolean
+    SKIN_TONE: Boolean
+}
+
+enum BUILD_TYPES {
+    female
+    male
+}
+
+enum HAIR_COLOR_ALTERNATIVES_TYPES {
+    Reds
+    Black
+    Brown
+    Grays_and_Whites
+}
+
+enum PERSONALITY_TRAITS_TYPES {
+    negative
+    positive
+}
+
+input GenerateFeaturesOptions {
+    BUILD: BUILD_TYPES
+    HAIR_COLOR_ALTERNATIVES: HAIR_COLOR_ALTERNATIVES_TYPES
+    PERSONALITY_TRAITS: PERSONALITY_TRAITS_TYPES
 }
 
 # FULL CHARACTER

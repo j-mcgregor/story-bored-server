@@ -3,7 +3,7 @@
 # import Notification from "notification.graphql"
 # import Post from "post.graphql"
 # import StoryLength from "storyLength.graphql"
-# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType, CharacterFirstNameType, CharacterLastNameType, CharacterOccupationType, CharacterTitleType, GenerateCharacter from "characterType.graphql"
+# import CharacterType, CharacterBodyPartsType, CharacterDescriptionsType, CharacterHonorificsType, CharacterFirstNameType, CharacterLastNameType, CharacterOccupationType, CharacterTitleType, GenerateCharacter, CharacterFeatureType, GenerateFeatures from "characterType.graphql"
 # import GenreType from "genres.graphql"
 # import WritingPrompt, PlotDevice, StageType, StoryScene, StoryStageEnum from "data.graphql"
 # ---- COMPLEX ----
@@ -49,9 +49,12 @@ type Query {
     characterOccupations: [CharacterOccupationType]!
     # -- titles
     characterTitles: [CharacterTitleType]!
+    # -- features
+    characterFeatures: [CharacterFeatureType]!
 
     # CHARACTER GENERATION
     generateCharacter(input: GenerateCharacterInput): GenerateCharacter
+    generateFeatures(input: GenerateFeaturesInput, options: GenerateFeaturesOptions): GenerateFeaturesType
 }
 
 type Mutation {
@@ -62,54 +65,58 @@ type Mutation {
     signUp(user: UserInput!): AuthPayload!
     addNotificationToken(notification: NotificationInput!): Notification
     updateProfile(user: UserInput!): User
+
     # STORY
+
     # -- length
     addStoryLength(storyLength: StoryLengthInput!): [StoryLength]
     updateStoryLength(storyLength: StoryLengthInput!): StoryLength
     deleteStoryLength(storyLengthId: String!): String
+
     # -- character type
     addCharacterType(characterType: CharacterInput!): CharacterType
     updateCharacterType(characterType: CharacterInput!): CharacterType
     deleteCharacterType(characterTypeId: String!): String
+
     # -- genre type
     addGenreType(genreType: GenreTypeInput!): [GenreType]
     updateGenreType(genreType: GenreTypeInput!): GenreType
     deleteGenreType(genreTypeId: String!): String
+
     # DATA
+
     # -- writing prompts
     addWritingPrompt(writingPrompt: WritingPromptInput!): WritingPrompt
     updateWritingPrompt(writingPrompt: WritingPromptInput!): WritingPrompt
     deleteWritingPrompt(writingPromptId: String!): String
     bulkAddWritingPrompt(writingPrompts: [WritingPromptInput]!): [WritingPrompt]
+
     # -- plot devices
     addPlotDevice(plotDevice: PlotDeviceInput!): [PlotDevice]
     updatePlotDevice(plotDevice: PlotDeviceInput!): PlotDevice
     deletePlotDevice(plotDeviceId: String!): String
     bulkAddPlotDevice(plotDevices: [PlotDeviceInput]!): [PlotDevice]
+
     # -- story stage
     addStoryStage(storyStage: StoryStageInput!): StageType
     updateStoryStage(storyStage: StoryStageInput!): StageType
     deleteStoryStage(storyStageId: String!): String
     bulkAddStoryStage(storyStages: [StoryStageInput]!): [StageType]
+
     # -- story stage
     addStoryScene(storyScene: StorySceneInput!): StoryScene
     updateStoryScene(storyScene: StorySceneInput!): StoryScene
     deleteStoryScene(storySceneId: String!): String
     bulkAddStoryScene(storyScenes: [StorySceneInput]!): [StoryScene]
+
     # STORY GENERATION
+
     # -- head
     createHead(meta: HeadInput): Head
+
     # -- generate structure
-    generateSections(
-        type: StructureTypeEnum
-        prologue: Boolean
-        epilogue: Boolean
-    ): [SectionType]
-    generateSectionsWithStages(
-        type: StructureTypeEnum
-        prologue: Boolean
-        epilogue: Boolean
-    ): [SectionType]
+    generateSections(type: StructureTypeEnum, prologue: Boolean, epilogue: Boolean): [SectionType]
+    generateSectionsWithStages(type: StructureTypeEnum, prologue: Boolean, epilogue: Boolean): [SectionType]
     generateSectionsWithChapters(
         type: StructureTypeEnum
         prologue: Boolean
@@ -137,61 +144,38 @@ type Mutation {
         includeChapters: Boolean
         includeScenes: Boolean
     ): [SectionType]
+
     # CHARACTER GENERATION
 
     # -- body part
     addCharacterBodyParts(part: String): CharacterBodyPartsType
-    updateCharacterBodyParts(
-        part: CharacterBodyPartsInput
-    ): CharacterBodyPartsType
+    updateCharacterBodyParts(part: CharacterBodyPartsInput): CharacterBodyPartsType
     deleteCharacterBodyParts(part: CharacterBodyPartsInput): String
-    bulkAddCharacterBodyParts(
-        parts: [CharacterBodyPartsInput]!
-    ): [CharacterBodyPartsType]
+    bulkAddCharacterBodyParts(parts: [CharacterBodyPartsInput]!): [CharacterBodyPartsType]
 
     # -- description
     addCharacterDescriptions(description: String): CharacterDescriptionsType
-    updateCharacterDescriptions(
-        description: CharacterDescriptionsInput
-    ): CharacterDescriptionsType
+    updateCharacterDescriptions(description: CharacterDescriptionsInput): CharacterDescriptionsType
     deleteCharacterDescriptions(descriptionId: String!): String
-    bulkAddCharacterDescriptions(
-        descriptions: [CharacterDescriptionsInput]!
-    ): [CharacterDescriptionsType]
+    bulkAddCharacterDescriptions(descriptions: [CharacterDescriptionsInput]!): [CharacterDescriptionsType]
 
     # -- honorifics
     addCharacterHonorifics(honorific: String): CharacterHonorificsType
-    updateCharacterHonorifics(
-        honorific: CharacterHonorificsInput
-    ): CharacterHonorificsType
+    updateCharacterHonorifics(honorific: CharacterHonorificsInput): CharacterHonorificsType
     deleteCharacterHonorifics(honorificId: String!): String
-    bulkAddCharacterHonorifics(
-        honorifics: [CharacterHonorificsInput]!
-    ): [CharacterHonorificsType]
+    bulkAddCharacterHonorifics(honorifics: [CharacterHonorificsInput]!): [CharacterHonorificsType]
 
     # -- first name
-    addCharacterFirstName(
-        first_name: CharacterFirstNameInput
-    ): CharacterFirstNameType
-    updateCharacterFirstName(
-        first_name: CharacterFirstNameInput
-    ): CharacterFirstNameType
+    addCharacterFirstName(first_name: CharacterFirstNameInput): CharacterFirstNameType
+    updateCharacterFirstName(first_name: CharacterFirstNameInput): CharacterFirstNameType
     deleteCharacterFirstName(first_nameId: String!): String
-    bulkAddCharacterFirstNames(
-        first_names: [CharacterFirstNameInput]!
-    ): [CharacterFirstNameType]
+    bulkAddCharacterFirstNames(first_names: [CharacterFirstNameInput]!): [CharacterFirstNameType]
 
     # -- last name
-    addCharacterLastName(
-        last_name: CharacterLastNameInput
-    ): CharacterLastNameType
-    updateCharacterLastName(
-        last_name: CharacterLastNameInput
-    ): CharacterLastNameType
+    addCharacterLastName(last_name: CharacterLastNameInput): CharacterLastNameType
+    updateCharacterLastName(last_name: CharacterLastNameInput): CharacterLastNameType
     deleteCharacterLastName(last_nameId: String!): String
-    bulkAddCharacterLastNames(
-        last_names: [CharacterLastNameInput]!
-    ): [CharacterLastNameType]
+    bulkAddCharacterLastNames(last_names: [CharacterLastNameInput]!): [CharacterLastNameType]
 
     # -- mood
     addCharacterMood(mood: CharacterMoodInput): CharacterMoodType
@@ -200,22 +184,22 @@ type Mutation {
     bulkAddCharacterMoods(moods: [CharacterMoodInput]!): [CharacterMoodType]
 
     # -- occupation
-    addCharacterOccupation(
-        occupation: CharacterOccupationInput
-    ): CharacterOccupationType
-    updateCharacterOccupation(
-        occupation: CharacterOccupationInput
-    ): CharacterOccupationType
+    addCharacterOccupation(occupation: CharacterOccupationInput): CharacterOccupationType
+    updateCharacterOccupation(occupation: CharacterOccupationInput): CharacterOccupationType
     deleteCharacterOccupation(occupationId: String!): String
-    bulkAddCharacterOccupations(
-        occupations: [CharacterOccupationInput]!
-    ): [CharacterOccupationType]
+    bulkAddCharacterOccupations(occupations: [CharacterOccupationInput]!): [CharacterOccupationType]
 
     # -- title
     addCharacterTitle(title: CharacterTitleInput): CharacterTitleType
     updateCharacterTitle(title: CharacterTitleInput): CharacterTitleType
     deleteCharacterTitle(titleId: String!): String
     bulkAddCharacterTitles(titles: [CharacterTitleInput]!): [CharacterTitleType]
+
+    # -- feature
+    addCharacterFeature(feature: CharacterFeatureInput): CharacterFeatureType
+    updateCharacterFeature(feature: CharacterFeatureInput): CharacterFeatureType
+    deleteCharacterFeature(featureId: String!): String
+    bulkAddCharacterFeatures(features: [CharacterFeatureInput]!): [CharacterFeatureType]
 }
 
 type Subscription {

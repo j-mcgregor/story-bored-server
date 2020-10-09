@@ -38,6 +38,11 @@ export type BodyStructureTypeInput = {
   epilogue?: Maybe<Scalars['Boolean']>;
 };
 
+export enum Build_Types {
+  Female = 'female',
+  Male = 'male'
+}
+
 export type ChapterType = {
   __typename?: 'ChapterType';
   chapter?: Maybe<Scalars['Int']>;
@@ -66,6 +71,23 @@ export type CharacterDescriptionsType = {
   __typename?: 'CharacterDescriptionsType';
   id?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+};
+
+export type CharacterFeatureInput = {
+  id?: Maybe<Scalars['String']>;
+  feature?: Maybe<Feature>;
+  value?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+};
+
+export type CharacterFeatureType = {
+  __typename?: 'CharacterFeatureType';
+  feature?: Maybe<Feature>;
+  value?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type CharacterFirstNameInput = {
@@ -184,6 +206,29 @@ export type CharacterType = {
 
 
 
+export enum Feature {
+  Age = 'AGE',
+  Build = 'BUILD',
+  Eyebrows = 'EYEBROWS',
+  EyeColor = 'EYE_COLOR',
+  EyeShape = 'EYE_SHAPE',
+  FacialShape = 'FACIAL_SHAPE',
+  FacialHair = 'FACIAL_HAIR',
+  FacialFeatures = 'FACIAL_FEATURES',
+  GeneralAppearance = 'GENERAL_APPEARANCE',
+  HairColor = 'HAIR_COLOR',
+  HairColorAlternatives = 'HAIR_COLOR_ALTERNATIVES',
+  HairLength = 'HAIR_LENGTH',
+  HairTypes = 'HAIR_TYPES',
+  Hands = 'HANDS',
+  Height = 'HEIGHT',
+  MouthLips = 'MOUTH_LIPS',
+  Nose = 'NOSE',
+  PersonalityTraits = 'PERSONALITY_TRAITS',
+  SkinGeneral = 'SKIN_GENERAL',
+  SkinTone = 'SKIN_TONE'
+}
+
 export enum Fix_Enum {
   Pre = 'PRE',
   Suf = 'SUF'
@@ -273,6 +318,59 @@ export type GenerateCharacterInput = {
   honorifics?: Maybe<Scalars['Boolean']>;
 };
 
+export type GenerateFeaturesInput = {
+  AGE?: Maybe<Scalars['Boolean']>;
+  BUILD?: Maybe<Scalars['Boolean']>;
+  EYEBROWS?: Maybe<Scalars['Boolean']>;
+  EYE_COLOR?: Maybe<Scalars['Boolean']>;
+  EYE_SHAPE?: Maybe<Scalars['Boolean']>;
+  FACIAL_SHAPE?: Maybe<Scalars['Boolean']>;
+  FACIAL_HAIR?: Maybe<Scalars['Boolean']>;
+  FACIAL_FEATURES?: Maybe<Scalars['Boolean']>;
+  GENERAL_APPEARANCE?: Maybe<Scalars['Boolean']>;
+  HAIR_COLOR?: Maybe<Scalars['Boolean']>;
+  HAIR_COLOR_ALTERNATIVES?: Maybe<Scalars['Boolean']>;
+  HAIR_LENGTH?: Maybe<Scalars['Boolean']>;
+  HAIR_TYPES?: Maybe<Scalars['Boolean']>;
+  HANDS?: Maybe<Scalars['Boolean']>;
+  HEIGHT?: Maybe<Scalars['Boolean']>;
+  MOUTH_LIPS?: Maybe<Scalars['Boolean']>;
+  NOSE?: Maybe<Scalars['Boolean']>;
+  PERSONALITY_TRAITS?: Maybe<Scalars['Boolean']>;
+  SKIN_GENERAL?: Maybe<Scalars['Boolean']>;
+  SKIN_TONE?: Maybe<Scalars['Boolean']>;
+};
+
+export type GenerateFeaturesOptions = {
+  BUILD?: Maybe<Build_Types>;
+  HAIR_COLOR_ALTERNATIVES?: Maybe<Hair_Color_Alternatives_Types>;
+  PERSONALITY_TRAITS?: Maybe<Personality_Traits_Types>;
+};
+
+export type GenerateFeaturesType = {
+  __typename?: 'GenerateFeaturesType';
+  AGE?: Maybe<CharacterFeatureType>;
+  BUILD?: Maybe<CharacterFeatureType>;
+  EYEBROWS?: Maybe<CharacterFeatureType>;
+  EYE_COLOR?: Maybe<CharacterFeatureType>;
+  EYE_SHAPE?: Maybe<CharacterFeatureType>;
+  FACIAL_SHAPE?: Maybe<CharacterFeatureType>;
+  FACIAL_HAIR?: Maybe<CharacterFeatureType>;
+  FACIAL_FEATURES?: Maybe<CharacterFeatureType>;
+  GENERAL_APPEARANCE?: Maybe<CharacterFeatureType>;
+  HAIR_COLOR?: Maybe<CharacterFeatureType>;
+  HAIR_COLOR_ALTERNATIVES?: Maybe<CharacterFeatureType>;
+  HAIR_LENGTH?: Maybe<CharacterFeatureType>;
+  HAIR_TYPES?: Maybe<CharacterFeatureType>;
+  HANDS?: Maybe<CharacterFeatureType>;
+  HEIGHT?: Maybe<CharacterFeatureType>;
+  MOUTH_LIPS?: Maybe<CharacterFeatureType>;
+  NOSE?: Maybe<CharacterFeatureType>;
+  PERSONALITY_TRAITS?: Maybe<CharacterFeatureType>;
+  SKIN_GENERAL?: Maybe<CharacterFeatureType>;
+  SKIN_TONE?: Maybe<CharacterFeatureType>;
+};
+
 export { GenreListType };
 
 export type GenreType = {
@@ -294,6 +392,13 @@ export type GenreTypeInput = {
 export type GetCharacterType = {
   type?: Maybe<CharacterListEnum>;
 };
+
+export enum Hair_Color_Alternatives_Types {
+  Reds = 'Reds',
+  Black = 'Black',
+  Brown = 'Brown',
+  GraysAndWhites = 'Grays_and_Whites'
+}
 
 export type Head = {
   __typename?: 'Head';
@@ -381,6 +486,10 @@ export type Mutation = {
   updateCharacterTitle?: Maybe<CharacterTitleType>;
   deleteCharacterTitle?: Maybe<Scalars['String']>;
   bulkAddCharacterTitles?: Maybe<Array<Maybe<CharacterTitleType>>>;
+  addCharacterFeature?: Maybe<CharacterFeatureType>;
+  updateCharacterFeature?: Maybe<CharacterFeatureType>;
+  deleteCharacterFeature?: Maybe<Scalars['String']>;
+  bulkAddCharacterFeatures?: Maybe<Array<Maybe<CharacterFeatureType>>>;
 };
 
 
@@ -756,6 +865,26 @@ export type MutationBulkAddCharacterTitlesArgs = {
   titles: Array<Maybe<CharacterTitleInput>>;
 };
 
+
+export type MutationAddCharacterFeatureArgs = {
+  feature?: Maybe<CharacterFeatureInput>;
+};
+
+
+export type MutationUpdateCharacterFeatureArgs = {
+  feature?: Maybe<CharacterFeatureInput>;
+};
+
+
+export type MutationDeleteCharacterFeatureArgs = {
+  featureId: Scalars['String'];
+};
+
+
+export type MutationBulkAddCharacterFeaturesArgs = {
+  features: Array<Maybe<CharacterFeatureInput>>;
+};
+
 export enum Name_Origin {
   Spanish = 'SPANISH',
   Norweigian = 'NORWEIGIAN',
@@ -777,6 +906,11 @@ export type NotificationInput = {
   device?: Maybe<Scalars['String']>;
   os?: Maybe<Scalars['String']>;
 };
+
+export enum Personality_Traits_Types {
+  Negative = 'negative',
+  Positive = 'positive'
+}
 
 export type PlotDevice = {
   __typename?: 'PlotDevice';
@@ -826,7 +960,9 @@ export type Query = {
   characterMoods: Array<Maybe<CharacterMoodType>>;
   characterOccupations: Array<Maybe<CharacterOccupationType>>;
   characterTitles: Array<Maybe<CharacterTitleType>>;
+  characterFeatures: Array<Maybe<CharacterFeatureType>>;
   generateCharacter?: Maybe<GenerateCharacter>;
+  generateFeatures?: Maybe<GenerateFeaturesType>;
 };
 
 
@@ -837,6 +973,12 @@ export type QueryUserArgs = {
 
 export type QueryGenerateCharacterArgs = {
   input?: Maybe<GenerateCharacterInput>;
+};
+
+
+export type QueryGenerateFeaturesArgs = {
+  input?: Maybe<GenerateFeaturesInput>;
+  options?: Maybe<GenerateFeaturesOptions>;
 };
 
 export type SceneType = {
@@ -1117,9 +1259,17 @@ export type ResolversTypes = {
   CharacterOccupationType: ResolverTypeWrapper<CharacterOccupationType>;
   CharacterTitleType: ResolverTypeWrapper<CharacterTitleType>;
   FIX_ENUM: Fix_Enum;
+  CharacterFeatureType: ResolverTypeWrapper<CharacterFeatureType>;
+  Feature: Feature;
   GenerateCharacterInput: GenerateCharacterInput;
   GetCharacterType: GetCharacterType;
   GenerateCharacter: ResolverTypeWrapper<GenerateCharacter>;
+  GenerateFeaturesInput: GenerateFeaturesInput;
+  GenerateFeaturesOptions: GenerateFeaturesOptions;
+  BUILD_TYPES: Build_Types;
+  HAIR_COLOR_ALTERNATIVES_TYPES: Hair_Color_Alternatives_Types;
+  PERSONALITY_TRAITS_TYPES: Personality_Traits_Types;
+  GenerateFeaturesType: ResolverTypeWrapper<GenerateFeaturesType>;
   Mutation: ResolverTypeWrapper<{}>;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   SocialUserInput: SocialUserInput;
@@ -1144,6 +1294,7 @@ export type ResolversTypes = {
   CharacterMoodInput: CharacterMoodInput;
   CharacterOccupationInput: CharacterOccupationInput;
   CharacterTitleInput: CharacterTitleInput;
+  CharacterFeatureInput: CharacterFeatureInput;
   Subscription: ResolverTypeWrapper<{}>;
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -1188,9 +1339,17 @@ export type ResolversParentTypes = {
   CharacterOccupationType: CharacterOccupationType;
   CharacterTitleType: CharacterTitleType;
   FIX_ENUM: Fix_Enum;
+  CharacterFeatureType: CharacterFeatureType;
+  Feature: Feature;
   GenerateCharacterInput: GenerateCharacterInput;
   GetCharacterType: GetCharacterType;
   GenerateCharacter: GenerateCharacter;
+  GenerateFeaturesInput: GenerateFeaturesInput;
+  GenerateFeaturesOptions: GenerateFeaturesOptions;
+  BUILD_TYPES: Build_Types;
+  HAIR_COLOR_ALTERNATIVES_TYPES: Hair_Color_Alternatives_Types;
+  PERSONALITY_TRAITS_TYPES: Personality_Traits_Types;
+  GenerateFeaturesType: GenerateFeaturesType;
   Mutation: {};
   AuthPayload: AuthPayload;
   SocialUserInput: SocialUserInput;
@@ -1215,6 +1374,7 @@ export type ResolversParentTypes = {
   CharacterMoodInput: CharacterMoodInput;
   CharacterOccupationInput: CharacterOccupationInput;
   CharacterTitleInput: CharacterTitleInput;
+  CharacterFeatureInput: CharacterFeatureInput;
   Subscription: {};
   BodyStructureTypeInput: BodyStructureTypeInput;
   SectionInput: SectionInput;
@@ -1243,6 +1403,16 @@ export type CharacterBodyPartsTypeResolvers<ContextType = MyContext, ParentType 
 export type CharacterDescriptionsTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterDescriptionsType'] = ResolversParentTypes['CharacterDescriptionsType']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type CharacterFeatureTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['CharacterFeatureType'] = ResolversParentTypes['CharacterFeatureType']> = {
+  feature?: Resolver<Maybe<ResolversTypes['Feature']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -1329,6 +1499,30 @@ export type GenerateCharacterResolvers<ContextType = MyContext, ParentType exten
   moods?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   occupations?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   Honorifics?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type GenerateFeaturesTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['GenerateFeaturesType'] = ResolversParentTypes['GenerateFeaturesType']> = {
+  AGE?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  BUILD?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  EYEBROWS?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  EYE_COLOR?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  EYE_SHAPE?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  FACIAL_SHAPE?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  FACIAL_HAIR?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  FACIAL_FEATURES?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  GENERAL_APPEARANCE?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  HAIR_COLOR?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  HAIR_COLOR_ALTERNATIVES?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  HAIR_LENGTH?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  HAIR_TYPES?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  HANDS?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  HEIGHT?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  MOUTH_LIPS?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  NOSE?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  PERSONALITY_TRAITS?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  SKIN_GENERAL?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
+  SKIN_TONE?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -1420,6 +1614,10 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   updateCharacterTitle?: Resolver<Maybe<ResolversTypes['CharacterTitleType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterTitleArgs, never>>;
   deleteCharacterTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterTitleArgs, 'titleId'>>;
   bulkAddCharacterTitles?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterTitleType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterTitlesArgs, 'titles'>>;
+  addCharacterFeature?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType, RequireFields<MutationAddCharacterFeatureArgs, never>>;
+  updateCharacterFeature?: Resolver<Maybe<ResolversTypes['CharacterFeatureType']>, ParentType, ContextType, RequireFields<MutationUpdateCharacterFeatureArgs, never>>;
+  deleteCharacterFeature?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCharacterFeatureArgs, 'featureId'>>;
+  bulkAddCharacterFeatures?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterFeatureType']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCharacterFeaturesArgs, 'features'>>;
 };
 
 export type NotificationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -1472,7 +1670,9 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   characterMoods?: Resolver<Array<Maybe<ResolversTypes['CharacterMoodType']>>, ParentType, ContextType>;
   characterOccupations?: Resolver<Array<Maybe<ResolversTypes['CharacterOccupationType']>>, ParentType, ContextType>;
   characterTitles?: Resolver<Array<Maybe<ResolversTypes['CharacterTitleType']>>, ParentType, ContextType>;
+  characterFeatures?: Resolver<Array<Maybe<ResolversTypes['CharacterFeatureType']>>, ParentType, ContextType>;
   generateCharacter?: Resolver<Maybe<ResolversTypes['GenerateCharacter']>, ParentType, ContextType, RequireFields<QueryGenerateCharacterArgs, never>>;
+  generateFeatures?: Resolver<Maybe<ResolversTypes['GenerateFeaturesType']>, ParentType, ContextType, RequireFields<QueryGenerateFeaturesArgs, never>>;
 };
 
 export type SceneTypeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['SceneType'] = ResolversParentTypes['SceneType']> = {
@@ -1572,6 +1772,7 @@ export type Resolvers<ContextType = MyContext> = {
   ChapterType?: ChapterTypeResolvers<ContextType>;
   CharacterBodyPartsType?: CharacterBodyPartsTypeResolvers<ContextType>;
   CharacterDescriptionsType?: CharacterDescriptionsTypeResolvers<ContextType>;
+  CharacterFeatureType?: CharacterFeatureTypeResolvers<ContextType>;
   CharacterFirstNameType?: CharacterFirstNameTypeResolvers<ContextType>;
   CharacterHonorificsType?: CharacterHonorificsTypeResolvers<ContextType>;
   CharacterLastNameType?: CharacterLastNameTypeResolvers<ContextType>;
@@ -1582,6 +1783,7 @@ export type Resolvers<ContextType = MyContext> = {
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
   GenerateCharacter?: GenerateCharacterResolvers<ContextType>;
+  GenerateFeaturesType?: GenerateFeaturesTypeResolvers<ContextType>;
   GenreType?: GenreTypeResolvers<ContextType>;
   Head?: HeadResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;

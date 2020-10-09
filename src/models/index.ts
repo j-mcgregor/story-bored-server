@@ -11,26 +11,15 @@ import PlotDevice, { PlotDeviceModelStatic } from './data/PlotDevice'
 import StoryStage, { StoryStageModelStatic } from './data/Stage'
 import StoryScene, { StorySceneModelStatic } from './data/StoryScene'
 // CHARACTER
-import CharacterBodyPart, {
-    CharacterBodyPartModelStatic,
-} from './character/BodyPart'
-import CharacterDescription, {
-    CharacterDescriptionModelStatic,
-} from './character/Description'
-import CharacterHonorifics, {
-    CharacterHonorificsModelStatic,
-} from './character/Honorifics'
-import CharacterFirstName, {
-    CharacterFirstNameModelStatic,
-} from './character/FirstName'
-import CharacterLastName, {
-    CharacterLastNameModelStatic,
-} from './character/LastName'
+import CharacterBodyPart, { CharacterBodyPartModelStatic } from './character/BodyPart'
+import CharacterDescription, { CharacterDescriptionModelStatic } from './character/Description'
+import CharacterHonorifics, { CharacterHonorificsModelStatic } from './character/Honorifics'
+import CharacterFirstName, { CharacterFirstNameModelStatic } from './character/FirstName'
+import CharacterLastName, { CharacterLastNameModelStatic } from './character/LastName'
 import CharacterMood, { CharacterMoodModelStatic } from './character/Mood'
-import CharacterOccupation, {
-    CharacterOccupationModelStatic,
-} from './character/Occupation'
+import CharacterOccupation, { CharacterOccupationModelStatic } from './character/Occupation'
 import CharacterTitle, { CharacterTitleModelStatic } from './character/Title'
+import CharacterFeature, { CharacterFeatureModelStatic } from './character/Feature'
 
 export default {
     Notification,
@@ -52,6 +41,7 @@ export default {
     CharacterMood,
     CharacterOccupation,
     CharacterTitle,
+    CharacterFeature,
 }
 
 export interface ModelType {
@@ -74,4 +64,5 @@ export interface ModelType {
     CharacterMood: CharacterMoodModelStatic
     CharacterOccupation: CharacterOccupationModelStatic
     CharacterTitle: CharacterTitleModelStatic
+    CharacterFeature: CharacterFeatureModelStatic
 }
